@@ -26,3 +26,4 @@
 - Installed Cloudflared to expose the local webserver to the internet for easy access to the dashboard from anywhere.
 
 - Added CNAME record in Cloudflare to point to the Cloudflared URL for easy access.
+- Pushed Docker-Compose file to the repository to make deployment easy.
