@@ -1,5 +1,3 @@
-version: "3.8"
-
 services:
   app:
     image: nginx:alpine
@@ -17,7 +15,7 @@ services:
     ports:
       - "8080:8080"
     volumes:
-      - /home/frede/swift-secrets/pangolin/config.yml:/config.yml:ro
+      - /home/frede/swift-secrets/pangolin/config.yml:/config/config.yml:ro
       - /home/frede/swift-secrets/pangolin/data:/data
 
   cloudflared:
