@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   pangolin:
-    image: ghcr.io/pangolin-auth/pangolin:release
+    image: fosrl/pangolin:latest
     container_name: pangolin
     restart: unless-stopped
     ports:
