@@ -23,3 +23,6 @@
 - Installed Github Runner & configured it to run as a service. And made it run as a service on the Raspberry PI so it always is online to pick up jobs.
 - Configured a workflow to deploy on self-hosted runner on the Raspberry Pi.
 
+- Installed Cloudflared to expose the local webserver to the internet for easy access to the dashboard from anywhere.
+
+- Added CNAME record in Cloudflare to point to the Cloudflared URL for easy access.

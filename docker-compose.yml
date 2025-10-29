@@ -1,0 +1,32 @@
+version: "3.8"
+
+services:
+  pangolin:
+    image: ghcr.io/pangolin-auth/pangolin:release
+    container_name: pangolin
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./pangolin/config.yml:/config.yml:ro
+    depends_on:
+      - app
+
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    container_name: cloudflared
+    restart: unless-stopped
+    command: tunnel run
+    volumes:
+      - ./cloudflared:/etc/cloudflared
+    depends_on:
+      - pangolin
+
+  app:
+    image: nginx:alpine
+    container_name: app
+    restart: unless-stopped
+    volumes:
+      - ./app:/usr/share/nginx/html:ro
+    expose:
+      - "3000"
