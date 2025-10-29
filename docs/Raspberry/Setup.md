@@ -29,3 +29,4 @@
 
 - Pushed Docker-Compose file to the repository to make deployment easy.
 - Created Cloudflared config file on the Raspberry Pi to make sure it uses the right tunnel and settings. and same for Pangolin config file.
+XXX
