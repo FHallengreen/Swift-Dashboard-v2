@@ -1,0 +1,20 @@
+name: Deploy to Raspberry Pi
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout latest code
+        uses: actions/checkout@v4
+
+      - name: Pull latest code and redeploy
+        run: |
+          cd ~/Swift-Dashboard-v2
+          git pull origin main
+          docker compose up -d --build
