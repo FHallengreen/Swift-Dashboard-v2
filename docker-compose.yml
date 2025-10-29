@@ -15,8 +15,8 @@ services:
     ports:
       - "8080:8080"
     volumes:
-      - /home/frede/swift-secrets/pangolin/config.yml:/config/config.yml:ro
-      - /home/frede/swift-secrets/pangolin/data:/data
+    - /home/frede/swift-secrets/pangolin:/app/config     
+    - /home/frede/swift-secrets/pangolin/data:/data
 
   cloudflared:
     image: cloudflare/cloudflared:latest
