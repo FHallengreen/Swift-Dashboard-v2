@@ -13,7 +13,7 @@ services:
     container_name: pangolin
     restart: unless-stopped
     ports:
-      - "8080:8080"
+      - "8080:3000"
     volumes:
     - /home/frede/swift-secrets/pangolin:/app/config     
     - /home/frede/swift-secrets/pangolin/data:/data
