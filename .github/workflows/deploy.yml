@@ -28,7 +28,8 @@ jobs:
       # 🔹 Rebuild backend & frontend only
       - name: Rebuild backend and frontend only
         run: |
-          cd ~/Swift-Dashboard-v2
           echo "Rebuilding backend and frontend containers..."
-          docker compose build --no-cache backend frontend
-          docker compose up -d backend frontend
+          cd ${{ github.workspace }}
+          docker compose -f docker-compose.yml build --no-cache backend frontend
+          docker compose -f docker-compose.yml up -d backend frontend
+
