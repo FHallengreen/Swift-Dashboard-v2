@@ -4,6 +4,8 @@ services:
       context: ./backend
       dockerfile: Dockerfile
     container_name: swift_display_backend
+    env_file:
+      - /home/frede/swift-secrets/dashboard.env
     expose:
       - "8080"
     depends_on:
@@ -32,6 +34,8 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
     container_name: swift_display_frontend
+    env_file:
+      - /home/frede/swift-secrets/dashboard.env
     expose:
       - "80"
     depends_on:

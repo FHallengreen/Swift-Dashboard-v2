@@ -10,19 +10,25 @@ jobs:
     runs-on: self-hosted
 
     steps:
-      # 🔹 Checkout the latest version of the repo
+      # 🔹 Clean repo fully (no need to preserve .env anymore)
+      - name: Clean old workspace
+        run: |
+          cd ~/Swift-Dashboard-v2 || exit 0
+          echo "Cleaning old workspace..."
+          sudo rm -rf ./* || true
+          sudo rm -rf ./.??* || true
+
+      # 🔹 Checkout latest repo state
       - name: Checkout latest code
         uses: actions/checkout@v4
         with:
           clean: true
           fetch-depth: 0
 
-      # 🔹 Rebuild and redeploy containers
-      - name: Rebuild and restart Docker containers
+      # 🔹 Rebuild backend & frontend only
+      - name: Rebuild backend and frontend only
         run: |
           cd ~/Swift-Dashboard-v2
-          echo "Stopping old containers..."
-          docker compose down --remove-orphans
-          echo "Rebuilding and starting fresh containers..."
-          docker compose build --no-cache
-          docker compose up -d
+          echo "Rebuilding backend and frontend containers..."
+          docker compose build --no-cache backend frontend
+          docker compose up -d backend frontend
