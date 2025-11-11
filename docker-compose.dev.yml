@@ -11,14 +11,9 @@ services:
         condition: service_healthy
     environment:
       - ConnectionStrings__DefaultConnection=Server=${DB_HOST};Database=${MYSQL_DATABASE};User=${DB_USER};Password=${MYSQL_ROOT_PASSWORD};Connection Timeout=30;Command Timeout=60;
-      - ASPNETCORE_ENVIRONMENT=${ASPNETCORE_ENVIRONMENT}
+      - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:8080
     restart: unless-stopped
-    privileged: true
-    volumes:
-      - /usr/bin/sudo:/usr/bin/sudo:ro
-      - /sbin/shutdown:/sbin/shutdown:ro
-      - /tmp/swift-triggers:/shared
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8080/health" ]
       interval: 30s
@@ -30,10 +25,23 @@ services:
   frontend:
     build:
       context: ./frontend
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.dev
     container_name: swift_display_frontend
     expose:
-      - "80"
+      - "5173"
+    volumes:
+      - ./frontend/src:/app/src
+      - ./frontend/public:/app/public
+      - ./frontend/index.html:/app/index.html
+      - ./frontend/vite.config.ts:/app/vite.config.ts
+      - ./frontend/tsconfig.json:/app/tsconfig.json
+      - ./frontend/tsconfig.app.json:/app/tsconfig.app.json
+      - ./frontend/tsconfig.node.json:/app/tsconfig.node.json
+      - ./frontend/eslint.config.js:/app/eslint.config.js
+      - /app/node_modules
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+      - WATCHPACK_POLLING=true
     depends_on:
       - backend
     restart: unless-stopped
@@ -45,20 +53,11 @@ services:
     ports:
       - "80:80"
     volumes:
-      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/nginx.dev.conf:/etc/nginx/nginx.conf:ro
     depends_on:
       - backend
       - frontend
     restart: unless-stopped
-    networks:
-      - swift_network
-  cloudflared:
-    image: cloudflare/cloudflared:latest
-    container_name: cloudflared
-    restart: unless-stopped
-    command: tunnel --config /etc/cloudflared/config.yml run
-    volumes:
-      - /home/frede/swift-secrets/cloudflared:/etc/cloudflared
     networks:
       - swift_network
   db:
