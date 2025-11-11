@@ -1,0 +1,39 @@
+name: Run Tests
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: testDB!
+          MYSQL_DATABASE: swift_dashboard_test
+          MYSQL_ROOT_HOST: '%'
+        ports:
+          - 3307:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=5
+
+    steps:
+      - uses: actions/checkout@v4
+      
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '9.0.x'
+
+      - name: Restore & Build
+        run: |
+          cd backend && dotnet restore && dotnet build
+          cd Tests && dotnet restore && dotnet build
+
+      - name: Run Tests
+        run: cd backend/Tests && dotnet test --no-build
+        env:
+          ConnectionStrings__DefaultConnection: "Server=127.0.0.1;Port=3307;Database=swift_dashboard_test;User=root;Password=testDB!"

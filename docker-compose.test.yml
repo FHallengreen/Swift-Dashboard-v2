@@ -1,0 +1,12 @@
+services:
+  mysql-test:
+    image: mysql:8.0
+    container_name: swift-test-db
+    environment:
+      MYSQL_ROOT_PASSWORD: testDB!
+      MYSQL_DATABASE: swift_dashboard_test
+      MYSQL_ROOT_HOST: '%'
+    ports:
+      - "3307:3306"
+    tmpfs:
+      - /var/lib/mysql

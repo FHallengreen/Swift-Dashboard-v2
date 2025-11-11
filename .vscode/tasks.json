@@ -1,0 +1,35 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Run All Tests",
+      "type": "shell",
+      "command": "bash",
+      "args": ["run-tests.sh"],
+      "windows": {
+        "command": "cmd",
+        "args": ["/c", "run-tests.bat"]
+      },
+      "group": {
+        "kind": "test",
+        "isDefault": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Start Test Database",
+      "type": "shell",
+      "command": "docker compose -f docker-compose.test.yml up -d && sleep 20",
+      "windows": {
+        "command": "docker compose -f docker-compose.test.yml up -d && timeout /t 20 /nobreak"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Stop Test Database",
+      "type": "shell",
+      "command": "docker compose -f docker-compose.test.yml down",
+      "problemMatcher": []
+    }
+  ]
+}

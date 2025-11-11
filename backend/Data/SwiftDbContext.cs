@@ -1,6 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+using SwiftDashboard.Models;
 
-namespace SwiftDashboard;
+namespace SwiftDashboard.Data;
 
 public class SwiftDbContext(DbContextOptions<SwiftDbContext> options) : DbContext(options)
 {
