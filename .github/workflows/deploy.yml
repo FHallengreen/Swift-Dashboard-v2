@@ -10,11 +10,19 @@ jobs:
     runs-on: self-hosted
 
     steps:
+      # 🔹 Checkout the latest version of the repo
       - name: Checkout latest code
         uses: actions/checkout@v4
+        with:
+          clean: true
+          fetch-depth: 0
 
-      - name: Pull latest code and redeploy
+      # 🔹 Rebuild and redeploy containers
+      - name: Rebuild and restart Docker containers
         run: |
           cd ~/Swift-Dashboard-v2
-          git pull origin main
-          docker compose up -d --build
+          echo "Stopping old containers..."
+          docker compose down --remove-orphans
+          echo "Rebuilding and starting fresh containers..."
+          docker compose build --no-cache
+          docker compose up -d
