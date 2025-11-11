@@ -74,7 +74,12 @@ app.MapGet("/health", () => Results.Ok(new
     version = "2.0"
 }));
 
-await SeedData(app);
+// Only seed data in non-test environments
+var environment = app.Environment;
+if (!environment.EnvironmentName.Contains("Test", StringComparison.OrdinalIgnoreCase))
+{
+    await SeedData(app);
+}
 
 app.Run();
 

@@ -11,6 +11,9 @@ public class CustomWebApplicationFactory : WebApplicationFactory<Program>
 {
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
+        // Set environment to Test to prevent seed data from running
+        builder.UseEnvironment("Test");
+        
         builder.ConfigureAppConfiguration((context, config) =>
         {
             // Load test configuration from Tests folder
@@ -50,7 +53,8 @@ public class CustomWebApplicationFactory : WebApplicationFactory<Program>
             var scopedServices = scope.ServiceProvider;
             var db = scopedServices.GetRequiredService<SwiftDbContext>();
 
-            // Ensure database exists for tests
+            // Ensure clean database for tests - delete any existing data first
+            db.Database.EnsureDeleted();
             db.Database.EnsureCreated();
         });
     }
