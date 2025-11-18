@@ -29,9 +29,9 @@ const ClockDisplay: React.FC<ClockDisplayProps> = ({ city, timezone, currentTime
   });
 
   return (
-    <div className="bg-[#0d1117] p-2 rounded-lg text-center border border-[#30363d]">
-      <p className="text-xl font-semibold text-[#58a6ff] mb-2">{city}</p>
-      <p className="text-5xl font-bold text-white">{timeString}</p>
+    <div className="bg-[#0d1117] p-4 rounded-lg text-center border border-[#30363d]">
+      <p className="text-2xl font-semibold text-[#58a6ff] mb-3">{city}</p>
+      <p className="text-6xl font-bold text-white">{timeString}</p>
     </div>
   );
 };
@@ -49,7 +49,7 @@ const Clocks: React.FC = () => {
 
   return (
     <div className="h-full flex flex-col">
-      <h2 className="text-2xl font-bold text-slate-200 mb-4">World Clocks</h2>
+      <h2 className="text-4xl font-bold text-slate-200 mb-6">World Clocks</h2>
       <div className="grid grid-cols-3 gap-6 flex-1 content-start">
         {initialClocks.map((clock) => (
           <ClockDisplay

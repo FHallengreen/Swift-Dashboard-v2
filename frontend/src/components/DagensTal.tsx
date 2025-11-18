@@ -131,32 +131,32 @@ const DagensTal: React.FC = () => {
 
   return (
     <div className="h-full flex flex-col">
-      <h2 className="text-2xl font-semibold text-slate-200 mb-4">Dagens Tal</h2>
+      <h2 className="text-4xl font-semibold text-slate-200 mb-6">Dagens Tal</h2>
       {isLoading ? (
         <div className="flex-1 flex items-center justify-center">
-          <p className="text-slate-400 text-base">Loading...</p>
+          <p className="text-slate-400 text-2xl">Loading...</p>
         </div>
       ) : error ? (
         <div className="flex-1 flex items-center justify-center">
-          <p className="text-red-400 text-base">{error}</p>
+          <p className="text-red-400 text-2xl">{error}</p>
         </div>
       ) : (
-        <div className="flex-1 flex flex-col items-center justify-center gap-4">
+        <div className="flex-1 flex flex-col items-center justify-center gap-6">
           {isEditing ? (
             <form onSubmit={handleSubmit} className="w-full flex flex-col gap-4">
               <input
                 type="text"
                 value={displayAmountInput}
                 onChange={handleAmountInputChange}
-                className="text-3xl font-bold text-center border-2 border-[#58a6ff] rounded-md p-3 bg-[#0d1117] text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-[#58a6ff] focus:border-[#58a6ff]"
+                className="text-5xl font-bold text-center border-2 border-[#58a6ff] rounded-md p-4 bg-[#0d1117] text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-[#58a6ff] focus:border-[#58a6ff]"
                 placeholder="0"
                 autoFocus
               />
-              <div className="flex gap-2">
+              <div className="flex gap-3">
                 <button
                   type="submit"
                   disabled={isLoading}
-                  className="flex-1 px-4 py-2.5 text-base font-semibold bg-[#114C96] text-white rounded-md hover:bg-[#0d3a75] transition-colors disabled:opacity-50"
+                  className="flex-1 px-6 py-3 text-xl font-semibold bg-[#114C96] text-white rounded-md hover:bg-[#0d3a75] transition-colors disabled:opacity-50"
                 >
                   Save
                 </button>
@@ -169,21 +169,21 @@ const DagensTal: React.FC = () => {
                     setError(null);
                   }}
                   disabled={isLoading}
-                  className="flex-1 px-4 py-2.5 text-base font-semibold bg-[#30363d] text-white rounded-md hover:bg-[#484f58] transition-colors disabled:opacity-50"
+                  className="flex-1 px-6 py-3 text-xl font-semibold bg-[#30363d] text-white rounded-md hover:bg-[#484f58] transition-colors disabled:opacity-50"
                 >
                   Cancel
                 </button>
               </div>
-              {error && <p className="text-red-400 text-center text-sm">{error}</p>}
+              {error && <p className="text-red-400 text-center text-lg">{error}</p>}
             </form>
           ) : (
             <>
-              <p className="text-4xl font-bold text-white">
+              <p className="text-6xl font-bold text-white">
                 {formattedAmount}
               </p>
               <button
                 onClick={() => setIsEditing(true)}
-                className="px-6 py-2.5 text-base font-semibold bg-[#114C96] text-white rounded-md hover:bg-[#0d3a75] transition-colors"
+                className="px-8 py-3 text-xl font-semibold bg-[#114C96] text-white rounded-md hover:bg-[#0d3a75] transition-colors"
               >
                 Edit
               </button>
