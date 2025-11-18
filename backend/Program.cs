@@ -7,7 +7,18 @@ using SwiftDashboard.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Build connection string from environment variables if not provided
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+if (string.IsNullOrEmpty(connectionString))
+{
+    var dbHost = builder.Configuration["DB_HOST"];
+    var dbPort = builder.Configuration["DB_PORT"];
+    var dbName = builder.Configuration["MYSQL_DATABASE"];
+    var dbUser = builder.Configuration["DB_USER"];
+    var dbPassword = builder.Configuration["MYSQL_ROOT_PASSWORD"];
+    
+    connectionString = $"Server={dbHost};Port={dbPort};Database={dbName};User={dbUser};Password={dbPassword};Connection Timeout=30;Command Timeout=60;";
+}
 
 if (!string.IsNullOrEmpty(connectionString))
 {

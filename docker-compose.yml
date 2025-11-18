@@ -12,8 +12,6 @@ services:
       db:
         condition: service_healthy
     environment:
-      - ConnectionStrings__DefaultConnection=Server=${DB_HOST};Database=${MYSQL_DATABASE};User=${DB_USER};Password=${MYSQL_ROOT_PASSWORD};Connection Timeout=30;Command Timeout=60;
-      - ASPNETCORE_ENVIRONMENT=${ASPNETCORE_ENVIRONMENT}
       - ASPNETCORE_URLS=http://+:8080
     restart: unless-stopped
     privileged: true
