@@ -177,17 +177,12 @@ const DagensTal: React.FC = () => {
               {error && <p className="text-red-400 text-center text-lg">{error}</p>}
             </form>
           ) : (
-            <>
-              <p className="text-6xl font-bold text-white">
-                {formattedAmount}
-              </p>
-              <button
-                onClick={() => setIsEditing(true)}
-                className="px-8 py-3 text-xl font-semibold bg-[#114C96] text-white rounded-md hover:bg-[#0d3a75] transition-colors"
-              >
-                Edit
-              </button>
-            </>
+            <button
+              onClick={() => setIsEditing(true)}
+              className="text-6xl font-bold text-white hover:text-[#58a6ff] transition-colors cursor-pointer"
+            >
+              {formattedAmount}
+            </button>
           )}
         </div>
       )}

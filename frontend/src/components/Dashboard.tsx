@@ -133,7 +133,7 @@ const Dashboard: React.FC = () => {
       <main className="flex-1 w-full px-8 py-6 overflow-hidden">
         <div className="h-full grid grid-rows-[50%_50%] gap-6">
           {/* Top Row: Left side (Clocks + Dagens Tal) and Right side (General Info) */}
-          <div className="grid grid-cols-[50%_50%] gap-6">
+          <div className="grid grid-cols-[40%_60%] gap-6">
             <div className="flex flex-col gap-6">
               <div className="bg-[#161b22] rounded-lg shadow-lg p-8 border border-[#30363d] flex-1">
                 <Clocks />
@@ -162,14 +162,14 @@ const Dashboard: React.FC = () => {
                 <div className="grid grid-cols-7 gap-3 h-[calc(100%-4rem)]">
                   {datesWithHolidays.slice(0, 7).map(([dateStr, holidaysOnDate]) => (
                     <div key={dateStr} className="bg-[#0d1117] rounded-lg p-3 border border-[#30363d] flex flex-col">
-                      <h4 className="text-lg font-bold text-[#58a6ff] mb-2 pb-2 border-b border-[#30363d] text-center">
+                      <h4 className="text-2xl font-bold text-[#58a6ff] mb-3 pb-2 border-b border-[#30363d] text-center">
                         {formatDateForDisplay(dateStr)}
                       </h4>
                       <div className="flex-1 overflow-y-auto space-y-2">
                         {holidaysOnDate.map((holiday, index) => (
-                          <div key={`${holiday.countryCode}-${holiday.name}-${index}`} className="bg-[#161b22] rounded p-2 border border-[#30363d]">
-                            <div className="font-bold text-slate-100 text-lg mb-1">{holiday.countryName}</div>
-                            <div className="text-slate-400 text-sm leading-tight" title={holiday.name}>{holiday.name}</div>
+                          <div key={`${holiday.countryCode}-${holiday.name}-${index}`} className="bg-[#161b22] rounded p-3 border border-[#30363d]">
+                            <div className="font-bold text-slate-100 text-xl mb-2">{holiday.countryName}</div>
+                            <div className="text-slate-400 text-base leading-snug" title={holiday.name}>{holiday.name}</div>
                           </div>
                         ))}
                       </div>

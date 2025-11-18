@@ -92,7 +92,7 @@ const InvoiceChart: React.FC = () => {
       y: {
         beginAtZero: true,
         ticks: {
-          font: { size: 18 },
+          font: { size: 24 },
           color: '#94a3b8',
           stepSize: 100000,
           callback: (tickValue: string | number): string => {
@@ -105,7 +105,7 @@ const InvoiceChart: React.FC = () => {
       },
       x: {
         ticks: {
-          font: { size: 18 },
+          font: { size: 24 },
           color: '#94a3b8',
         },
         grid: {
@@ -120,9 +120,9 @@ const InvoiceChart: React.FC = () => {
         labels: {
           color: '#cbd5e1',
           font: {
-            size: 20
+            size: 26
           },
-          padding: 15,
+          padding: 20,
           usePointStyle: true,
           pointStyle: 'circle'
         }
