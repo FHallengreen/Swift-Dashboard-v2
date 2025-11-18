@@ -75,8 +75,6 @@ var app = builder.Build();
 app.UseRouting();
 app.UseCors("FrontendDevPolicy");
 
-app.MapGet("/health", () => Results.Ok(new { status = "healthy", timestamp = DateTime.UtcNow }));
-
 app.MapControllers();
 app.MapHub<InvoiceUpdateHub>("/api/invoiceHub");
 
