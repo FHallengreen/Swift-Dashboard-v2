@@ -130,25 +130,24 @@ const Dashboard: React.FC = () => {
     <div className="h-screen w-screen flex flex-col bg-[#0d1117] overflow-hidden">
       <Header time={time} date={date} weekNumber={weekNumber} />
       
-      <main className="flex-1 w-full px-10 py-6 overflow-y-auto">
-        <div className="h-full flex flex-col gap-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-2">
-            <div className="flex flex-col gap-2 h-full">
-              <div className="bg-[#161b22] rounded-lg shadow-lg p-6 border border-[#30363d] flex-1">
-                <Clocks />
-              </div>
-              <div className="bg-[#161b22] rounded-lg shadow-lg p-6 border border-[#30363d] flex-1">
-                <DagensTal />
-              </div>
+      <main className="flex-1 w-full px-6 py-4 overflow-hidden">
+        <div className="h-full grid grid-rows-[45%_25%_30%] gap-4">
+          {/* Top Row: Clocks, Dagens Tal, General Info */}
+          <div className="grid grid-cols-3 gap-4">
+            <div className="bg-[#161b22] rounded-lg shadow-lg p-6 border border-[#30363d]">
+              <Clocks />
             </div>
-            <div className="bg-[#161b22] rounded-lg shadow-lg p-6 border border-[#30363d] flex-1">
+            <div className="bg-[#161b22] rounded-lg shadow-lg p-6 border border-[#30363d]">
+              <DagensTal />
+            </div>
+            <div className="bg-[#161b22] rounded-lg shadow-lg p-6 border border-[#30363d]">
               <GeneralInfo />
             </div>
           </div>
 
-          {/* Holidays Section - Compact Grid Layout */}
-          <div className="bg-[#161b22] rounded-lg shadow-lg p-3 border border-[#30363d]">
-            <h3 className="text-2xl font-bold text-slate-200 mb-4">
+          {/* Middle Row: Holidays Section - Compact Grid Layout */}
+          <div className="bg-[#161b22] rounded-lg shadow-lg p-4 border border-[#30363d]">
+            <h3 className="text-2xl font-bold text-slate-200 mb-3">
               Helligdage næste 5 dage
             </h3>
             {holidaysLoading ? (
@@ -156,17 +155,17 @@ const Dashboard: React.FC = () => {
             ) : holidaysError ? (
               <p className="text-red-400 text-center py-4 text-lg">{holidaysError}</p>
             ) : datesWithHolidays.length > 0 ? (
-              <div className="grid grid-cols-5 gap-2">
+              <div className="grid grid-cols-5 gap-3 h-[calc(100%-3rem)]">
                 {datesWithHolidays.slice(0, 5).map(([dateStr, holidaysOnDate]) => (
-                  <div key={dateStr} className="bg-[#0d1117] rounded-lg p-2 border border-[#30363d]">
-                    <h4 className="text-xl font-bold text-[#58a6ff] mb-4 pb-1 border-b border-[#30363d] text-center">
+                  <div key={dateStr} className="bg-[#0d1117] rounded-lg p-3 border border-[#30363d] flex flex-col">
+                    <h4 className="text-lg font-bold text-[#58a6ff] mb-2 pb-2 border-b border-[#30363d] text-center">
                       {formatDateForDisplay(dateStr)}
                     </h4>
-                    <div className="grid grid-cols-2 gap-2">
+                    <div className="flex-1 overflow-y-auto space-y-2">
                       {holidaysOnDate.map((holiday, index) => (
-                        <div key={`${holiday.countryCode}-${holiday.name}-${index}`} className="bg-[#161b22] rounded p-1 border border-[#30363d]">
-                          <div className="font-bold text-slate-100 text-sm mb-2 truncate">{holiday.countryName}</div>
-                          <div className="text-slate-400 text-xs leading-tight line-clamp-2" title={holiday.name}>{holiday.name}</div>
+                        <div key={`${holiday.countryCode}-${holiday.name}-${index}`} className="bg-[#161b22] rounded p-2 border border-[#30363d]">
+                          <div className="font-bold text-slate-100 text-sm mb-1">{holiday.countryName}</div>
+                          <div className="text-slate-400 text-xs leading-tight" title={holiday.name}>{holiday.name}</div>
                         </div>
                       ))}
                     </div>
@@ -178,8 +177,8 @@ const Dashboard: React.FC = () => {
             )}
           </div>
 
-          {/* Invoice Chart */}
-          <div className="bg-[#161b22] rounded-lg shadow-lg p-6 border border-[#30363d]">
+          {/* Bottom Row: Invoice Chart */}
+          <div className="bg-[#161b22] rounded-lg shadow-lg p-4 border border-[#30363d]">
             <InvoiceChart />
           </div>
         </div>

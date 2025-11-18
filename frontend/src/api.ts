@@ -1,4 +1,4 @@
-import axios, { AxiosError, AxiosResponse } from 'axios';
+import axios, { AxiosError, type AxiosResponse } from 'axios';
 import type { Holiday } from './interface/holiday';
 
 const api = axios.create({
