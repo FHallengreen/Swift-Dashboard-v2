@@ -53,7 +53,7 @@ const GeneralInfo: React.FC = () => {
       ) : (
         <div className="flex-1 flex flex-col gap-4">
           <textarea
-            className="flex-1 text-2xl text-white bg-[#0d1117] border border-[#30363d] rounded-lg p-6 resize-none focus:outline-none focus:ring-2 focus:ring-[#58a6ff] focus:border-[#58a6ff] placeholder-slate-500"
+            className="flex-1 text-3xl text-white bg-[#0d1117] border border-[#30363d] rounded-lg p-6 resize-none focus:outline-none focus:ring-2 focus:ring-[#58a6ff] focus:border-[#58a6ff] placeholder-slate-500 leading-relaxed"
             value={infoText}
             onChange={handleInfoChange}
             placeholder="Enter general information..."

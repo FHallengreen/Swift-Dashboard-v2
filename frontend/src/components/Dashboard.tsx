@@ -133,7 +133,7 @@ const Dashboard: React.FC = () => {
       <main className="flex-1 w-full px-8 py-6 overflow-hidden">
         <div className="h-full grid grid-rows-[50%_50%] gap-6">
           {/* Top Row: Left side (Clocks + Dagens Tal) and Right side (General Info) */}
-          <div className="grid grid-cols-[60%_40%] gap-6">
+          <div className="grid grid-cols-[50%_50%] gap-6">
             <div className="flex flex-col gap-6">
               <div className="bg-[#161b22] rounded-lg shadow-lg p-8 border border-[#30363d] flex-1">
                 <Clocks />
@@ -148,27 +148,27 @@ const Dashboard: React.FC = () => {
           </div>
 
           {/* Bottom Row: Holidays and Invoice Chart */}
-          <div className="grid grid-rows-[45%_55%] gap-6">
+          <div className="grid grid-rows-[40%_60%] gap-6">
             {/* Holidays Section */}
             <div className="bg-[#161b22] rounded-lg shadow-lg p-6 border border-[#30363d]">
               <h3 className="text-3xl font-bold text-slate-200 mb-4">
-                Helligdage næste 5 dage
+                Helligdage næste 7 dage
               </h3>
               {holidaysLoading ? (
                 <p className="text-slate-400 text-center py-4 text-2xl">Indlæser helligdage...</p>
               ) : holidaysError ? (
                 <p className="text-red-400 text-center py-4 text-2xl">{holidaysError}</p>
               ) : datesWithHolidays.length > 0 ? (
-                <div className="grid grid-cols-5 gap-4 h-[calc(100%-4rem)]">
-                  {datesWithHolidays.slice(0, 5).map(([dateStr, holidaysOnDate]) => (
-                    <div key={dateStr} className="bg-[#0d1117] rounded-lg p-4 border border-[#30363d] flex flex-col">
-                      <h4 className="text-xl font-bold text-[#58a6ff] mb-3 pb-2 border-b border-[#30363d] text-center">
+                <div className="grid grid-cols-7 gap-3 h-[calc(100%-4rem)]">
+                  {datesWithHolidays.slice(0, 7).map(([dateStr, holidaysOnDate]) => (
+                    <div key={dateStr} className="bg-[#0d1117] rounded-lg p-3 border border-[#30363d] flex flex-col">
+                      <h4 className="text-lg font-bold text-[#58a6ff] mb-2 pb-2 border-b border-[#30363d] text-center">
                         {formatDateForDisplay(dateStr)}
                       </h4>
-                      <div className="flex-1 overflow-y-auto space-y-3">
+                      <div className="flex-1 overflow-y-auto space-y-2">
                         {holidaysOnDate.map((holiday, index) => (
-                          <div key={`${holiday.countryCode}-${holiday.name}-${index}`} className="bg-[#161b22] rounded p-3 border border-[#30363d]">
-                            <div className="font-bold text-slate-100 text-base mb-2">{holiday.countryName}</div>
+                          <div key={`${holiday.countryCode}-${holiday.name}-${index}`} className="bg-[#161b22] rounded p-2 border border-[#30363d]">
+                            <div className="font-bold text-slate-100 text-lg mb-1">{holiday.countryName}</div>
                             <div className="text-slate-400 text-sm leading-tight" title={holiday.name}>{holiday.name}</div>
                           </div>
                         ))}
@@ -177,7 +177,7 @@ const Dashboard: React.FC = () => {
                   ))}
                 </div>
               ) : (
-                <p className="text-slate-400 text-center py-4 text-2xl">Ingen helligdage de næste 5 dage.</p>
+                <p className="text-slate-400 text-center py-4 text-2xl">Ingen helligdage de næste 7 dage.</p>
               )}
             </div>
 
