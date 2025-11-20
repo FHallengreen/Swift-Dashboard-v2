@@ -94,9 +94,9 @@ const Holidays: React.FC = () => {
           <p className="text-red-400 text-base md:text-lg xl:text-lg 3xl:text-2xl">{error}</p>
         </div>
       ) : datesWithHolidays.length > 0 ? (
-        <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-7 gap-2 md:gap-2.5 xl:gap-2.5 3xl:gap-3 h-[calc(100%-3rem)] md:h-[calc(100%-3.5rem)] xl:h-[calc(100%-3.5rem)] 3xl:h-[calc(100%-4rem)]">
+        <div className="grid auto-cols-fr gap-2 md:gap-2.5 xl:gap-2.5 3xl:gap-3 h-[calc(100%-3rem)] md:h-[calc(100%-3.5rem)] xl:h-[calc(100%-3.5rem)] 3xl:h-[calc(100%-4rem)]" style={{ gridTemplateColumns: `repeat(${Math.min(datesWithHolidays.length, 7)}, 1fr)` }}>
           {datesWithHolidays.slice(0, 7).map(([dateStr, holidaysOnDate]) => (
-            <div key={dateStr} className="bg-[#0d1117] rounded-lg p-2 md:p-2.5 xl:p-2.5 3xl:p-3 border border-[#30363d] flex flex-col">
+            <div key={dateStr} className="bg-[#0d1117] rounded-lg p-2 md:p-2.5 xl:p-2.5 3xl:p-3 border border-[#30363d] flex flex-col min-w-0">
               <h4 className="text-base md:text-lg xl:text-lg 3xl:text-2xl font-bold text-[#58a6ff] mb-2 md:mb-2.5 xl:mb-2.5 3xl:mb-3 pb-1.5 md:pb-2 border-b border-[#30363d] text-center">
                 {formatDateForDisplay(dateStr)}
               </h4>
