@@ -1,5 +1,7 @@
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using SwiftDashboard.Data;
+using SwiftDashboard.Hubs;
 using SwiftDashboard.Interfaces;
 using SwiftDashboard.Models;
 
@@ -8,10 +10,12 @@ namespace SwiftDashboard.Services;
 public class InfoService : IInfoService
 {
     private readonly SwiftDbContext _dbContext;
+    private readonly IHubContext<InfoUpdateHub> _hubContext;
 
-    public InfoService(SwiftDbContext dbContext)
+    public InfoService(SwiftDbContext dbContext, IHubContext<InfoUpdateHub> hubContext)
     {
         _dbContext = dbContext;
+        _hubContext = hubContext;
     }
 
     public async Task<Info?> GetInfoAsync()
@@ -34,5 +38,8 @@ public class InfoService : IInfoService
         }
         
         await _dbContext.SaveChangesAsync();
+        
+        // Broadcast the update to all connected clients
+        await _hubContext.Clients.All.SendAsync("ReceiveInfoUpdate", new { Text = text });
     }
 }

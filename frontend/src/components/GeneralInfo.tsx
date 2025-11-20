@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import api from '../api';
+import * as signalR from '@microsoft/signalr';
 
 const GeneralInfo: React.FC = () => {
   const [infoText, setInfoText] = useState<string>('');
@@ -8,17 +9,40 @@ const GeneralInfo: React.FC = () => {
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
   useEffect(() => {
-    setIsLoading(true);
-    api
-      .get('/info')
-      .then((res) => {
-        setInfoText(res.data.text || (res.data.Text || ''));
-      })
-      .catch((error) => {
-        console.error('Error fetching info:', error);
-        setError('Failed to load general information');
-      })
-      .finally(() => setIsLoading(false));
+    const fetchInfo = () => {
+      setIsLoading(true);
+      api
+        .get('/info')
+        .then((res) => {
+          setInfoText(res.data.text || (res.data.Text || ''));
+        })
+        .catch((error) => {
+          console.error('Error fetching info:', error);
+          setError('Failed to load general information');
+        })
+        .finally(() => setIsLoading(false));
+    };
+
+    fetchInfo();
+
+    // Set up SignalR connection
+    const connection = new signalR.HubConnectionBuilder()
+      .withUrl('/api/infoHub')
+      .withAutomaticReconnect()
+      .build();
+
+    connection.on("ReceiveInfoUpdate", (data: { Text: string }) => {
+      console.log("SignalR: ReceiveInfoUpdate", data);
+      setInfoText(data.Text || '');
+    });
+
+    connection.start()
+      .then(() => console.log('SignalR Connected for GeneralInfo'))
+      .catch(err => console.error('SignalR Connection Error: ', err));
+
+    return () => {
+      connection.stop();
+    };
   }, []);
 
   const handleInfoChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {

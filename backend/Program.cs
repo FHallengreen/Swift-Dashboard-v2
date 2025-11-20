@@ -77,6 +77,7 @@ app.UseCors("FrontendDevPolicy");
 
 app.MapControllers();
 app.MapHub<InvoiceUpdateHub>("/api/invoiceHub");
+app.MapHub<InfoUpdateHub>("/api/infoHub");
 
 app.MapGet("/health", () => Results.Ok(new
 {
