@@ -31,9 +31,10 @@ const GeneralInfo: React.FC = () => {
       .withAutomaticReconnect()
       .build();
 
-    connection.on("ReceiveInfoUpdate", (data: { Text: string }) => {
+    connection.on("ReceiveInfoUpdate", (data: { Text?: string; text?: string }) => {
       console.log("SignalR: ReceiveInfoUpdate", data);
-      setInfoText(data.Text || '');
+      const newText = data.Text ?? data.text ?? '';
+      setInfoText(newText);
     });
 
     connection.start()
@@ -55,10 +56,13 @@ const GeneralInfo: React.FC = () => {
   const handleUpdateInfo = async () => {
     setError(null);
     setSuccessMessage(null);
+    const textToSave = infoText;
     try {
-      await api.post('/info', { text: infoText }, {
+      await api.post('/info', { text: textToSave }, {
         headers: { 'Content-Type': 'application/json' },
       });
+      // Keep the text in state after successful save
+      setInfoText(textToSave);
       setSuccessMessage('Information updated successfully!');
       setTimeout(() => setSuccessMessage(null), 3000);
     } catch (error) {
