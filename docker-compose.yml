@@ -52,13 +52,6 @@ services:
       - backend
       - frontend
     restart: unless-stopped
-    healthcheck:
-      test: ["CMD", "wget", "--spider", "-q", "http://localhost/health"]
-      interval: 5s
-      timeout: 3s
-      retries: 10
-      start_period: 10s
-
     networks:
       - swift_network
   cloudflared:
@@ -68,9 +61,6 @@ services:
     command: tunnel --config /etc/cloudflared/config.yml run
     volumes:
       - /home/frede/swift-secrets/cloudflared:/etc/cloudflared
-    depends_on:
-      nginx:
-        condition: service_healthy
     networks:
       - swift_network
   db:
