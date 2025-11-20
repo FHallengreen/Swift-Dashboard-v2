@@ -81,30 +81,30 @@ const Holidays: React.FC = () => {
     .sort(([dateA], [dateB]) => new Date(dateA).getTime() - new Date(dateB).getTime());
 
   return (
-    <div className="bg-[#161b22] rounded-lg shadow-lg p-6 border border-[#30363d] h-full">
-      <h3 className="text-3xl font-bold text-slate-200 mb-4">
+    <div className="bg-[#161b22] rounded-lg shadow-lg p-3 md:p-4 xl:p-6 border border-[#30363d] h-full min-h-[200px] lg:min-h-0">
+      <h3 className="text-xl md:text-2xl xl:text-3xl font-bold text-slate-200 mb-2 md:mb-3 xl:mb-4">
         Helligdage næste 7 dage
       </h3>
       {isLoading ? (
-        <div className="flex items-center justify-center h-[calc(100%-4rem)]">
-          <p className="text-slate-400 text-2xl">Indlæser helligdage...</p>
+        <div className="flex items-center justify-center h-[calc(100%-3rem)] md:h-[calc(100%-3.5rem)] xl:h-[calc(100%-4rem)]">
+          <p className="text-slate-400 text-base md:text-lg xl:text-2xl">Indlæser helligdage...</p>
         </div>
       ) : error ? (
-        <div className="flex items-center justify-center h-[calc(100%-4rem)]">
-          <p className="text-red-400 text-2xl">{error}</p>
+        <div className="flex items-center justify-center h-[calc(100%-3rem)] md:h-[calc(100%-3.5rem)] xl:h-[calc(100%-4rem)]">
+          <p className="text-red-400 text-base md:text-lg xl:text-2xl">{error}</p>
         </div>
       ) : datesWithHolidays.length > 0 ? (
-        <div className="grid grid-cols-7 gap-3 h-[calc(100%-4rem)]">
+        <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-7 gap-2 md:gap-2.5 xl:gap-3 h-[calc(100%-3rem)] md:h-[calc(100%-3.5rem)] xl:h-[calc(100%-4rem)]">
           {datesWithHolidays.slice(0, 7).map(([dateStr, holidaysOnDate]) => (
-            <div key={dateStr} className="bg-[#0d1117] rounded-lg p-3 border border-[#30363d] flex flex-col">
-              <h4 className="text-2xl font-bold text-[#58a6ff] mb-3 pb-2 border-b border-[#30363d] text-center">
+            <div key={dateStr} className="bg-[#0d1117] rounded-lg p-2 md:p-2.5 xl:p-3 border border-[#30363d] flex flex-col">
+              <h4 className="text-base md:text-lg xl:text-2xl font-bold text-[#58a6ff] mb-2 md:mb-2.5 xl:mb-3 pb-1.5 md:pb-2 border-b border-[#30363d] text-center">
                 {formatDateForDisplay(dateStr)}
               </h4>
-              <div className="flex-1 overflow-y-auto space-y-2">
+              <div className="flex-1 overflow-y-auto space-y-1.5 md:space-y-2">
                 {holidaysOnDate.map((holiday, index) => (
-                  <div key={`${holiday.countryCode}-${holiday.name}-${index}`} className="bg-[#161b22] rounded p-3 border border-[#30363d]">
-                    <div className="font-bold text-slate-100 text-xl mb-2">{holiday.countryName}</div>
-                    <div className="text-slate-400 text-base leading-snug" title={holiday.name}>{holiday.name}</div>
+                  <div key={`${holiday.countryCode}-${holiday.name}-${index}`} className="bg-[#161b22] rounded p-2 md:p-2.5 xl:p-3 border border-[#30363d]">
+                    <div className="font-bold text-slate-100 text-sm md:text-base xl:text-xl mb-1 md:mb-1.5 xl:mb-2">{holiday.countryName}</div>
+                    <div className="text-slate-400 text-xs md:text-sm xl:text-base leading-snug" title={holiday.name}>{holiday.name}</div>
                   </div>
                 ))}
               </div>
@@ -112,8 +112,8 @@ const Holidays: React.FC = () => {
           ))}
         </div>
       ) : (
-        <div className="flex items-center justify-center h-[calc(100%-4rem)]">
-          <p className="text-slate-400 text-2xl">Ingen helligdage de næste 7 dage.</p>
+        <div className="flex items-center justify-center h-[calc(100%-3rem)] md:h-[calc(100%-3.5rem)] xl:h-[calc(100%-4rem)]">
+          <p className="text-slate-400 text-base md:text-lg xl:text-2xl">Ingen helligdage de næste 7 dage.</p>
         </div>
       )}
     </div>
