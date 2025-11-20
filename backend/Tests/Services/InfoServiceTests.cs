@@ -1,8 +1,11 @@
 using System;
 using System.Threading.Tasks;
 using FluentAssertions;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
+using Moq;
 using SwiftDashboard.Data;
+using SwiftDashboard.Hubs;
 using SwiftDashboard.Models;
 using SwiftDashboard.Services;
 using Xunit;
@@ -13,6 +16,7 @@ public class InfoServiceTests : IDisposable
 {
     private readonly SwiftDbContext _dbContext;
     private readonly InfoService _service;
+    private readonly Mock<IHubContext<InfoUpdateHub>> _mockHubContext;
 
     public InfoServiceTests()
     {
@@ -21,7 +25,15 @@ public class InfoServiceTests : IDisposable
             .Options;
 
         _dbContext = new SwiftDbContext(options);
-        _service = new InfoService(_dbContext);
+        _mockHubContext = new Mock<IHubContext<InfoUpdateHub>>();
+        
+        // Setup mock for SignalR
+        var mockClients = new Mock<IHubClients>();
+        var mockClientProxy = new Mock<IClientProxy>();
+        _mockHubContext.Setup(x => x.Clients).Returns(mockClients.Object);
+        mockClients.Setup(x => x.All).Returns(mockClientProxy.Object);
+        
+        _service = new InfoService(_dbContext, _mockHubContext.Object);
     }
 
     [Fact]

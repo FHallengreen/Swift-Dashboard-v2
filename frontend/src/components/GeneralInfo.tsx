@@ -68,7 +68,7 @@ const GeneralInfo: React.FC = () => {
   };
 
   return (
-    <div className="h-full flex flex-col">
+    <div className="bg-[#161b22] rounded-lg shadow-lg p-3 md:p-4 xl:p-4 3xl:p-6 border border-[#30363d] h-full flex flex-col">
       <h2 className="text-2xl md:text-3xl xl:text-3xl 3xl:text-4xl font-bold text-slate-200 mb-3 md:mb-4 xl:mb-4 3xl:mb-6">General Info</h2>
       {isLoading ? (
         <div className="flex-1 flex items-center justify-center">
