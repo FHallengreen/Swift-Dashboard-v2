@@ -57,7 +57,7 @@ const Dashboard: React.FC = () => {
     <div className="h-screen w-screen flex flex-col bg-[#0d1117] overflow-hidden">
       <Header time={time} date={date} weekNumber={weekNumber} />
       
-      <main className="flex-1 w-full px-4 py-4 md:px-6 md:py-5 xl:px-8 xl:py-6 3xl:px-8 3xl:py-6 overflow-y-auto 3xl:overflow-hidden">
+      <main className="flex-1 w-full px-2 py-4 md:px-4 md:py-5 xl:px-4 xl:py-6 3xl:px-8 3xl:py-6 overflow-y-auto 3xl:overflow-hidden">
         <div className="min-h-full 3xl:h-full flex flex-col gap-4 md:gap-5 xl:gap-6">
           {/* Top Row: Left side (Clocks + Dagens Tal) and Right side (General Info) */}
           <div className="grid grid-cols-1 lg:grid-cols-[45%_55%] 3xl:grid-cols-[40%_60%] 3xl:flex-1">
