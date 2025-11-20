@@ -75,7 +75,7 @@ const Dashboard: React.FC = () => {
           </div>
 
           {/* Bottom Row: Holidays and Invoice Chart */}
-          <div className="grid grid-rows-auto 3xl:grid-rows-[40%_60%] gap-4 md:gap-5 xl:gap-6">
+          <div className="grid grid-cols-1 gap-4 md:gap-5 xl:gap-6">
             {/* Holidays Section */}
             <Holidays />
 
