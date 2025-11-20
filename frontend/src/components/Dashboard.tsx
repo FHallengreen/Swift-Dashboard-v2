@@ -60,7 +60,7 @@ const Dashboard: React.FC = () => {
       <main className="flex-1 w-full px-2 py-4 md:px-4 md:py-5 xl:px-4 xl:py-6 3xl:px-8 3xl:py-6 overflow-y-auto 3xl:overflow-hidden">
         <div className="min-h-full 3xl:h-full flex flex-col gap-4 md:gap-5 xl:gap-6">
           {/* Top Row: Left side (Clocks + Dagens Tal) and Right side (General Info) */}
-          <div className="grid grid-cols-1 lg:grid-cols-[45fr_55fr] 3xl:grid-cols-[40fr_60fr] gap-4 md:gap-5 xl:gap-6 3xl:flex-1">
+          <div className="grid grid-cols-1 lg:grid-cols-[45fr_55fr] 3xl:grid-cols-[40fr_60fr] gap-2 md:gap-2 xl:gap-6 3xl:flex-1">
             <div className="flex flex-col gap-4 md:gap-5 xl:gap-6">
               <div className="bg-[#161b22] rounded-lg shadow-lg p-4 md:p-6 xl:p-8 border border-[#30363d] min-h-[250px] 3xl:flex-1 3xl:min-h-0">
                 <Clocks />
