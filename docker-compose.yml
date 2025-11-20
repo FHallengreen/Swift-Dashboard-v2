@@ -53,10 +53,11 @@ services:
       - frontend
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "wget", "--spider", "-q", "http://localhost/"]
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost/health"]
       interval: 5s
       timeout: 3s
       retries: 10
+      start_period: 10s
 
     networks:
       - swift_network
