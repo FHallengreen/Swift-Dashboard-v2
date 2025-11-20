@@ -32,7 +32,6 @@ const Dashboard: React.FC = () => {
     updateTime();
     const timeUpdateTimer = setInterval(updateTime, 1000);
 
-    // Refresh page at 3 AM
     const refreshAt3AM = () => {
       const now = new Date();
       const target = new Date(now);
