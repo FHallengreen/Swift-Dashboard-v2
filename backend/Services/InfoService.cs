@@ -25,21 +25,48 @@ public class InfoService : IInfoService
 
     public async Task UpdateInfoAsync(string? text)
     {
-        var info = await _dbContext.Info.FirstOrDefaultAsync(i => i.Id == 1);
+        // Use retry logic to handle concurrent writes gracefully
+        int maxRetries = 3;
+        int retryCount = 0;
         
-        if (info != null)
+        while (retryCount < maxRetries)
         {
-            info.Text = text;
-            _dbContext.Update(info);
+            try
+            {
+                var info = await _dbContext.Info.FirstOrDefaultAsync(i => i.Id == 1);
+                
+                if (info != null)
+                {
+                    info.Text = text;
+                    _dbContext.Update(info);
+                }
+                else
+                {
+                    _dbContext.Info.Add(new Info { Id = 1, Text = text });
+                }
+                
+                await _dbContext.SaveChangesAsync();
+                
+                // Broadcast the update to all connected clients
+                await _hubContext.Clients.All.SendAsync("ReceiveInfoUpdate", new { Text = text });
+                
+                return; // Success
+            }
+            catch (DbUpdateException ex) when (ex.InnerException is MySqlConnector.MySqlException mysqlEx && 
+                                                mysqlEx.Number == 1062) // Duplicate entry error
+            {
+                // Reset context state for retry
+                _dbContext.ChangeTracker.Clear();
+                retryCount++;
+                
+                if (retryCount >= maxRetries)
+                {
+                    throw;
+                }
+                
+                // Small delay before retry
+                await Task.Delay(10 * retryCount);
+            }
         }
-        else
-        {
-            _dbContext.Info.Add(new Info { Id = 1, Text = text });
-        }
-        
-        await _dbContext.SaveChangesAsync();
-        
-        // Broadcast the update to all connected clients
-        await _hubContext.Clients.All.SendAsync("ReceiveInfoUpdate", new { Text = text });
     }
 }
