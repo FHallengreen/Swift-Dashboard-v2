@@ -66,4 +66,4 @@ jobs:
           cd ${{ github.workspace }}
           docker compose -f docker-compose.yml build --no-cache backend frontend
           echo "Restarting all services including cloudflared..."
-          docker compose -f docker-compose.yml up -d
+          docker compose -f docker-compose.yml up -d --force-recreate nginx backend frontend
