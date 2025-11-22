@@ -62,7 +62,7 @@ const Dashboard: React.FC = () => {
           {/* Top Row: Left side (Clocks + Dagens Tal) and Right side (General Info) */}
           <div className="grid grid-cols-1 lg:grid-cols-[45fr_55fr] 2xl:grid-cols-[40fr_60fr] gap-3 md:gap-4 xl:gap-5 2xl:gap-5 4k:gap-6 2xl:h-[40%]">
             <div className="flex flex-col gap-3 md:gap-4 xl:gap-5 2xl:gap-5 4k:gap-6 2xl:h-full">
-              <div className="bg-[#161b22] rounded-lg shadow-lg p-3 md:p-4 xl:p-5 2xl:p-6 4k:p-10 border border-[#30363d] min-h-[250px] 2xl:flex-[2] 2xl:min-h-0">
+              <div className="bg-[#161b22] rounded-lg shadow-lg p-3 md:p-4 xl:p-5 2xl:p-6 4k:p-10 border border-[#30363d] min-h-[250px] 2xl:flex-[3] 2xl:min-h-0">
                 <Clocks />
               </div>
               <div className="bg-[#161b22] rounded-lg shadow-lg p-3 md:p-4 xl:p-5 2xl:p-6 4k:p-10 border border-[#30363d] min-h-[280px] 2xl:flex-1 2xl:min-h-0">
@@ -75,12 +75,12 @@ const Dashboard: React.FC = () => {
           {/* Bottom Row: Holidays and Invoice Chart */}
           <div className="flex flex-col gap-3 md:gap-4 xl:gap-5 2xl:gap-5 4k:gap-6 2xl:flex-1 2xl:min-h-0">
             {/* Holidays Section */}
-            <div className="min-h-[220px] 2xl:flex-[2] 2xl:min-h-0">
+            <div className="min-h-[220px] 2xl:flex-1 2xl:min-h-0">
               <Holidays />
             </div>
 
             {/* Invoice Chart */}
-            <div className="min-h-[350px] 2xl:flex-[3] 2xl:min-h-0">
+            <div className="min-h-[350px] 2xl:flex-1 2xl:min-h-0">
               <div className="bg-[#161b22] rounded-lg shadow-lg p-2 md:p-3 xl:p-4 2xl:p-5 4k:p-6 border border-[#30363d] h-full flex flex-col">
                 <InvoiceChart />
               </div>
