@@ -73,7 +73,7 @@ const GeneralInfo: React.FC = () => {
 
   return (
     <div className="bg-[#161b22] rounded-lg shadow-lg p-3 md:p-4 xl:p-4 3xl:p-6 4k:p-10 border border-[#30363d] h-full flex flex-col">
-      <h2 className="text-2xl md:text-3xl xl:text-3xl 3xl:text-4xl 4k:text-6xl font-bold text-slate-200 mb-3 md:mb-4 xl:mb-4 3xl:mb-6 4k:mb-8">General Info</h2>
+      <h2 className="text-2xl md:text-3xl xl:text-4xl 3xl:text-6xl 4k:text-8xl font-bold text-slate-200 mb-3 md:mb-4 xl:mb-5 3xl:mb-8 4k:mb-10">General Info</h2>
       {isLoading ? (
         <div className="flex-1 flex items-center justify-center">
           <p className="text-slate-400 text-lg md:text-xl xl:text-xl 3xl:text-2xl 4k:text-4xl">Loading...</p>
@@ -81,14 +81,14 @@ const GeneralInfo: React.FC = () => {
       ) : (
         <div className="flex-1 flex flex-col gap-3 md:gap-3.5 xl:gap-3.5 3xl:gap-4 4k:gap-6">
           <textarea
-            className="flex-1 text-lg md:text-2xl xl:text-2xl 3xl:text-3xl 4k:text-5xl text-white bg-[#0d1117] border border-[#30363d] rounded-lg p-3 md:p-4 xl:p-4 3xl:p-6 4k:p-10 resize-none focus:outline-none focus:ring-2 focus:ring-[#58a6ff] focus:border-[#58a6ff] placeholder-slate-500 leading-relaxed"
+            className="flex-1 text-lg md:text-2xl xl:text-3xl 3xl:text-5xl 4k:text-7xl text-white bg-[#0d1117] border border-[#30363d] rounded-lg p-3 md:p-4 xl:p-5 3xl:p-8 4k:p-12 resize-none focus:outline-none focus:ring-2 focus:ring-[#58a6ff] focus:border-[#58a6ff] placeholder-slate-500 leading-relaxed"
             value={infoText}
             onChange={handleInfoChange}
             placeholder="Enter general information..."
           />
           <button
             onClick={handleUpdateInfo}
-            className="px-4 py-2 md:px-6 md:py-2.5 xl:px-6 xl:py-2.5 3xl:px-8 3xl:py-3 4k:px-12 4k:py-5 bg-[#114C96] text-white text-base md:text-lg xl:text-lg 3xl:text-xl 4k:text-3xl font-bold rounded-lg hover:bg-[#0d3a75] focus:outline-none focus:ring-2 focus:ring-[#58a6ff] transition-colors"
+            className="px-4 py-2 md:px-6 md:py-2.5 xl:px-7 xl:py-3 3xl:px-10 3xl:py-4 4k:px-16 4k:py-8 bg-[#114C96] text-white text-base md:text-lg xl:text-2xl 3xl:text-3xl 4k:text-5xl font-bold rounded-lg hover:bg-[#0d3a75] focus:outline-none focus:ring-2 focus:ring-[#58a6ff] transition-colors"
           >
             Update
           </button>

@@ -131,7 +131,7 @@ const DagensTal: React.FC = () => {
 
   return (
     <div className="h-full flex flex-col">
-      <h2 className="text-2xl md:text-3xl xl:text-3xl 3xl:text-4xl 4k:text-6xl font-semibold text-slate-200 mb-3 md:mb-4 xl:mb-4 3xl:mb-6 4k:mb-8">Dagens Tal</h2>
+      <h2 className="text-2xl md:text-3xl xl:text-4xl 3xl:text-6xl 4k:text-8xl font-bold text-slate-200 mb-3 md:mb-4 xl:mb-5 3xl:mb-8 4k:mb-10">Dagens Tal</h2>
       {isLoading ? (
         <div className="flex-1 flex items-center justify-center">
           <p className="text-slate-400 text-lg md:text-xl xl:text-xl 3xl:text-2xl 4k:text-4xl">Loading...</p>
@@ -179,7 +179,7 @@ const DagensTal: React.FC = () => {
           ) : (
             <button
               onClick={() => setIsEditing(true)}
-              className="text-3xl md:text-4xl lg:text-5xl xl:text-5xl 3xl:text-6xl 4k:text-9xl font-bold text-white hover:text-[#58a6ff] transition-colors cursor-pointer"
+              className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl 3xl:text-8xl 4k:text-[12rem] font-bold text-white hover:text-[#58a6ff] transition-colors cursor-pointer"
             >
               {formattedAmount}
             </button>

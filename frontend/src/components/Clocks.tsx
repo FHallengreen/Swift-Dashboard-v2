@@ -29,9 +29,9 @@ const ClockDisplay: React.FC<ClockDisplayProps> = ({ city, timezone, currentTime
   });
 
   return (
-    <div className="bg-[#0d1117] p-2 md:p-3 xl:p-3 3xl:p-4 4k:p-6 rounded-lg text-center border border-[#30363d]">
-      <p className="text-sm md:text-lg xl:text-lg 3xl:text-2xl 4k:text-4xl font-semibold text-[#58a6ff] mb-1 md:mb-2 xl:mb-2 3xl:mb-3 4k:mb-4">{city}</p>
-      <p className="text-2xl md:text-4xl lg:text-5xl xl:text-5xl 3xl:text-6xl 4k:text-8xl font-bold text-white">{timeString}</p>
+    <div className="bg-[#0d1117] p-2 md:p-3 xl:p-4 3xl:p-6 4k:p-10 rounded-lg text-center border border-[#30363d]">
+      <p className="text-sm md:text-lg xl:text-2xl 3xl:text-4xl 4k:text-6xl font-semibold text-[#58a6ff] mb-1 md:mb-2 xl:mb-3 3xl:mb-4 4k:mb-6">{city}</p>
+      <p className="text-2xl md:text-4xl lg:text-5xl xl:text-6xl 3xl:text-8xl 4k:text-9xl font-bold text-white">{timeString}</p>
     </div>
   );
 };
@@ -49,8 +49,8 @@ const Clocks: React.FC = () => {
 
   return (
     <div className="h-full flex flex-col">
-      <h2 className="text-2xl md:text-3xl xl:text-3xl 3xl:text-4xl 4k:text-6xl font-bold text-slate-200 mb-3 md:mb-4 xl:mb-4 3xl:mb-6 4k:mb-8">World Clocks</h2>
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4 xl:gap-4 3xl:gap-6 4k:gap-8 flex-1 content-start">
+      <h2 className="text-2xl md:text-3xl xl:text-4xl 3xl:text-6xl 4k:text-8xl font-bold text-slate-200 mb-3 md:mb-4 xl:mb-5 3xl:mb-8 4k:mb-10">World Clocks</h2>
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4 xl:gap-5 3xl:gap-8 4k:gap-10 flex-1 content-start">
         {initialClocks.map((clock) => (
           <ClockDisplay
             key={clock.city}

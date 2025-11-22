@@ -57,15 +57,15 @@ const Dashboard: React.FC = () => {
     <div className="h-screen w-screen flex flex-col bg-[#0d1117] overflow-hidden">
       <Header time={time} date={date} weekNumber={weekNumber} />
       
-      <main className="flex-1 w-full px-2 py-4 md:px-4 md:py-5 xl:px-6 xl:py-6 3xl:px-10 3xl:py-8 4k:px-16 4k:py-12 overflow-y-auto 3xl:overflow-hidden">
-        <div className="min-h-full 3xl:h-full flex flex-col gap-4 md:gap-5 xl:gap-6 3xl:gap-8 4k:gap-12">
+      <main className="flex-1 w-full px-2 py-3 md:px-4 md:py-4 xl:px-6 xl:py-5 3xl:px-8 3xl:py-6 4k:px-12 4k:py-8 overflow-hidden">
+        <div className="h-full flex flex-col gap-3 md:gap-4 xl:gap-5 3xl:gap-6 4k:gap-8">
           {/* Top Row: Left side (Clocks + Dagens Tal) and Right side (General Info) */}
-          <div className="grid grid-cols-1 lg:grid-cols-[45fr_55fr] 3xl:grid-cols-[40fr_60fr] gap-2 md:gap-2 xl:gap-6 3xl:gap-8 4k:gap-12 3xl:flex-1">
-            <div className="flex flex-col gap-4 md:gap-5 xl:gap-6 3xl:gap-8 4k:gap-12">
-              <div className="bg-[#161b22] rounded-lg shadow-lg p-4 md:p-6 xl:p-8 3xl:p-10 4k:p-16 border border-[#30363d] min-h-[250px] 3xl:flex-1 3xl:min-h-0">
+          <div className="grid grid-cols-1 lg:grid-cols-[45fr_55fr] 3xl:grid-cols-[40fr_60fr] gap-2 md:gap-2 xl:gap-5 3xl:gap-6 4k:gap-8 h-[48%]">
+            <div className="flex flex-col gap-3 md:gap-4 xl:gap-5 3xl:gap-6 4k:gap-8 h-full">
+              <div className="bg-[#161b22] rounded-lg shadow-lg p-4 md:p-5 xl:p-6 3xl:p-8 4k:p-12 border border-[#30363d] flex-1 min-h-0">
                 <Clocks />
               </div>
-              <div className="bg-[#161b22] rounded-lg shadow-lg p-4 md:p-6 xl:p-8 3xl:p-10 4k:p-16 border border-[#30363d] min-h-[280px] 3xl:flex-1 3xl:min-h-0">
+              <div className="bg-[#161b22] rounded-lg shadow-lg p-4 md:p-5 xl:p-6 3xl:p-8 4k:p-12 border border-[#30363d] flex-1 min-h-0">
                 <DagensTal />
               </div>
             </div>
@@ -73,12 +73,14 @@ const Dashboard: React.FC = () => {
           </div>
 
           {/* Bottom Row: Holidays and Invoice Chart */}
-          <div className="grid grid-rows-[auto_1fr] 3xl:grid-rows-[35%_65%] gap-4 md:gap-5 xl:gap-6 3xl:gap-8 4k:gap-12 3xl:flex-1">
+          <div className="flex flex-col gap-3 md:gap-4 xl:gap-5 3xl:gap-6 4k:gap-8 flex-1 min-h-0">
             {/* Holidays Section */}
-            <Holidays />
+            <div className="h-[30%]">
+              <Holidays />
+            </div>
 
             {/* Invoice Chart */}
-            <div className="bg-[#161b22] rounded-lg shadow-lg p-3 md:p-4 xl:p-6 3xl:p-8 4k:p-12 border border-[#30363d] min-h-[400px] 3xl:min-h-0">
+            <div className="flex-1 min-h-0 bg-[#161b22] rounded-lg shadow-lg p-3 md:p-4 xl:p-5 3xl:p-6 4k:p-10 border border-[#30363d]">
               <InvoiceChart />
             </div>
           </div>
