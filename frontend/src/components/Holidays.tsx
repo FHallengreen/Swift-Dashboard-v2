@@ -103,7 +103,7 @@ const Holidays: React.FC = () => {
               <div className="flex-1 overflow-y-auto space-y-1.5 md:space-y-2 xl:space-y-3 3xl:space-y-4 4k:space-y-6">
                 {holidaysOnDate.map((holiday, index) => (
                   <div key={`${holiday.countryCode}-${holiday.name}-${index}`} className="bg-[#161b22] rounded p-2 md:p-3 xl:p-4 3xl:p-6 4k:p-8 border border-[#30363d]">
-                    <div className="font-bold text-slate-100 text-sm md:text-lg xl:text-xl 3xl:text-3xl 4k:text-5xl mb-1 md:mb-2 xl:mb-3 3xl:mb-4 4k:mb-5">{holiday.countryName}</div>
+                    <div className="font-bold text-slate-100 text-sm md:text-lg xl:text-xl 3xl:text-3xl 4k:text-6xl mb-1 md:mb-2 xl:mb-3 3xl:mb-4 4k:mb-5">{holiday.countryName}</div>
                     <div className="text-slate-400 text-xs md:text-base xl:text-lg 3xl:text-2xl 4k:text-4xl leading-snug" title={holiday.name}>{holiday.name}</div>
                   </div>
                 ))}

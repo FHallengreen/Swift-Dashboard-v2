@@ -91,10 +91,10 @@ const InvoiceChart: React.FC = () => {
     scales: {
       y: {
         beginAtZero: true,
+        grace: '5%',
         ticks: {
           font: { size: window.innerWidth >= 3840 ? 48 : window.innerWidth >= 1920 ? 32 : window.innerWidth >= 1280 ? 20 : window.innerWidth >= 768 ? 16 : 12 },
           color: '#94a3b8',
-          stepSize: 100000,
           callback: (tickValue: string | number): string => {
             return new Intl.NumberFormat('da-DK', { maximumSignificantDigits: 3 }).format(Number(tickValue));
           },
