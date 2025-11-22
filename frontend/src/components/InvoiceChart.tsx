@@ -105,7 +105,7 @@ const InvoiceChart: React.FC = () => {
       },
       x: {
         ticks: {
-          font: { size: window.innerWidth >= 1920 ? 24 : window.innerWidth >= 1280 ? 18 : window.innerWidth >= 768 ? 16 : 12 },
+          font: { size: window.innerWidth >= 3840 ? 36 : window.innerWidth >= 1920 ? 24 : window.innerWidth >= 1280 ? 18 : window.innerWidth >= 768 ? 16 : 12 },
           color: '#94a3b8',
         },
         grid: {
@@ -120,9 +120,9 @@ const InvoiceChart: React.FC = () => {
         labels: {
           color: '#cbd5e1',
           font: {
-            size: window.innerWidth >= 1920 ? 26 : window.innerWidth >= 1280 ? 20 : window.innerWidth >= 768 ? 18 : 14
+            size: window.innerWidth >= 3840 ? 40 : window.innerWidth >= 1920 ? 26 : window.innerWidth >= 1280 ? 20 : window.innerWidth >= 768 ? 18 : 14
           },
-          padding: window.innerWidth >= 1920 ? 20 : window.innerWidth >= 1280 ? 14 : window.innerWidth >= 768 ? 12 : 8,
+          padding: window.innerWidth >= 3840 ? 30 : window.innerWidth >= 1920 ? 20 : window.innerWidth >= 1280 ? 14 : window.innerWidth >= 768 ? 12 : 8,
           usePointStyle: true,
           pointStyle: 'circle'
         }
@@ -138,7 +138,7 @@ const InvoiceChart: React.FC = () => {
         align: 'end',
         offset: -15,
         color: '#ffffff',
-        font: { size: window.innerWidth >= 1920 ? 18 : window.innerWidth >= 1280 ? 15 : window.innerWidth >= 768 ? 14 : 11, weight: 'bold' },
+        font: { size: window.innerWidth >= 3840 ? 28 : window.innerWidth >= 1920 ? 18 : window.innerWidth >= 1280 ? 15 : window.innerWidth >= 768 ? 14 : 11, weight: 'bold' },
         textAlign: 'center',
         padding: 3,
       },
@@ -149,12 +149,12 @@ const InvoiceChart: React.FC = () => {
         bodyColor: '#cbd5e1',
         borderColor: 'rgba(88, 166, 255, 0.5)',
         borderWidth: 1,
-        padding: window.innerWidth >= 1920 ? 10 : window.innerWidth >= 768 ? 8 : 6,
+        padding: window.innerWidth >= 3840 ? 16 : window.innerWidth >= 1920 ? 10 : window.innerWidth >= 768 ? 8 : 6,
         titleFont: {
-          size: window.innerWidth >= 1920 ? 14 : window.innerWidth >= 1280 ? 13 : window.innerWidth >= 768 ? 12 : 10
+          size: window.innerWidth >= 3840 ? 24 : window.innerWidth >= 1920 ? 14 : window.innerWidth >= 1280 ? 13 : window.innerWidth >= 768 ? 12 : 10
         },
         bodyFont: {
-          size: window.innerWidth >= 1920 ? 13 : window.innerWidth >= 1280 ? 12 : window.innerWidth >= 768 ? 11 : 9
+          size: window.innerWidth >= 3840 ? 22 : window.innerWidth >= 1920 ? 13 : window.innerWidth >= 1280 ? 12 : window.innerWidth >= 768 ? 11 : 9
         }
       }
     },
@@ -162,11 +162,11 @@ const InvoiceChart: React.FC = () => {
 
   return (
     <div className="h-full flex flex-col">
-      <h3 className="text-base md:text-lg xl:text-lg 3xl:text-xl font-semibold text-slate-200 mb-2 md:mb-2.5 xl:mb-2.5 3xl:mb-3">Invoice Overview</h3>
+      <h3 className="text-base md:text-lg xl:text-lg 3xl:text-xl 4k:text-3xl font-semibold text-slate-200 mb-2 md:mb-2.5 xl:mb-2.5 3xl:mb-3 4k:mb-5">Invoice Overview</h3>
       {isLoading ? (
-        <p className="text-center text-slate-400 py-4 md:py-6 xl:py-6 3xl:py-8 text-sm md:text-base">Loading chart...</p>
+        <p className="text-center text-slate-400 py-4 md:py-6 xl:py-6 3xl:py-8 4k:py-12 text-sm md:text-base 4k:text-2xl">Loading chart...</p>
       ) : error ? (
-        <p className="text-center text-red-400 py-4 md:py-6 xl:py-6 3xl:py-8 text-sm md:text-base">{error}</p>
+        <p className="text-center text-red-400 py-4 md:py-6 xl:py-6 3xl:py-8 4k:py-12 text-sm md:text-base 4k:text-2xl">{error}</p>
       ) : (
         <div className="flex-1 min-h-0">
           <Bar data={chartData} options={chartOptions} />

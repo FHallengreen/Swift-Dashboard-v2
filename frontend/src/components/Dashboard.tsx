@@ -57,15 +57,15 @@ const Dashboard: React.FC = () => {
     <div className="h-screen w-screen flex flex-col bg-[#0d1117] overflow-hidden">
       <Header time={time} date={date} weekNumber={weekNumber} />
       
-      <main className="flex-1 w-full px-2 py-4 md:px-4 md:py-5 xl:px-4 xl:py-6 3xl:px-8 3xl:py-6 overflow-y-auto 3xl:overflow-hidden">
-        <div className="min-h-full 3xl:h-full flex flex-col gap-4 md:gap-5 xl:gap-6">
+      <main className="flex-1 w-full px-2 py-4 md:px-4 md:py-5 xl:px-4 xl:py-6 3xl:px-8 3xl:py-6 4k:px-12 4k:py-8 overflow-y-auto 3xl:overflow-hidden">
+        <div className="min-h-full 3xl:h-full flex flex-col gap-4 md:gap-5 xl:gap-6 4k:gap-10">
           {/* Top Row: Left side (Clocks + Dagens Tal) and Right side (General Info) */}
-          <div className="grid grid-cols-1 lg:grid-cols-[45fr_55fr] 3xl:grid-cols-[40fr_60fr] gap-2 md:gap-2 xl:gap-6 3xl:flex-1">
-            <div className="flex flex-col gap-4 md:gap-5 xl:gap-6">
-              <div className="bg-[#161b22] rounded-lg shadow-lg p-4 md:p-6 xl:p-8 border border-[#30363d] min-h-[250px] 3xl:flex-1 3xl:min-h-0">
+          <div className="grid grid-cols-1 lg:grid-cols-[45fr_55fr] 3xl:grid-cols-[40fr_60fr] gap-2 md:gap-2 xl:gap-6 4k:gap-10 3xl:flex-1">
+            <div className="flex flex-col gap-4 md:gap-5 xl:gap-6 4k:gap-10">
+              <div className="bg-[#161b22] rounded-lg shadow-lg p-4 md:p-6 xl:p-8 4k:p-12 border border-[#30363d] min-h-[250px] 3xl:flex-1 3xl:min-h-0">
                 <Clocks />
               </div>
-              <div className="bg-[#161b22] rounded-lg shadow-lg p-4 md:p-6 xl:p-8 border border-[#30363d] min-h-[280px] 3xl:flex-1 3xl:min-h-0">
+              <div className="bg-[#161b22] rounded-lg shadow-lg p-4 md:p-6 xl:p-8 4k:p-12 border border-[#30363d] min-h-[280px] 3xl:flex-1 3xl:min-h-0">
                 <DagensTal />
               </div>
             </div>
@@ -73,12 +73,12 @@ const Dashboard: React.FC = () => {
           </div>
 
           {/* Bottom Row: Holidays and Invoice Chart */}
-          <div className="grid grid-rows-[auto_1fr] 3xl:grid-rows-[40%_60%] gap-4 md:gap-5 xl:gap-6 3xl:flex-1">
+          <div className="grid grid-rows-[auto_1fr] 3xl:grid-rows-[40%_60%] gap-4 md:gap-5 xl:gap-6 4k:gap-10 3xl:flex-1">
             {/* Holidays Section */}
             <Holidays />
 
             {/* Invoice Chart */}
-            <div className="bg-[#161b22] rounded-lg shadow-lg p-3 md:p-4 xl:p-6 border border-[#30363d] min-h-[400px] 3xl:min-h-0">
+            <div className="bg-[#161b22] rounded-lg shadow-lg p-3 md:p-4 xl:p-6 4k:p-10 border border-[#30363d] min-h-[400px] 3xl:min-h-0">
               <InvoiceChart />
             </div>
           </div>

@@ -131,32 +131,32 @@ const DagensTal: React.FC = () => {
 
   return (
     <div className="h-full flex flex-col">
-      <h2 className="text-2xl md:text-3xl xl:text-3xl 3xl:text-4xl font-semibold text-slate-200 mb-3 md:mb-4 xl:mb-4 3xl:mb-6">Dagens Tal</h2>
+      <h2 className="text-2xl md:text-3xl xl:text-3xl 3xl:text-4xl 4k:text-6xl font-semibold text-slate-200 mb-3 md:mb-4 xl:mb-4 3xl:mb-6 4k:mb-8">Dagens Tal</h2>
       {isLoading ? (
         <div className="flex-1 flex items-center justify-center">
-          <p className="text-slate-400 text-lg md:text-xl xl:text-xl 3xl:text-2xl">Loading...</p>
+          <p className="text-slate-400 text-lg md:text-xl xl:text-xl 3xl:text-2xl 4k:text-4xl">Loading...</p>
         </div>
       ) : error ? (
         <div className="flex-1 flex items-center justify-center">
-          <p className="text-red-400 text-lg md:text-xl xl:text-xl 3xl:text-2xl">{error}</p>
+          <p className="text-red-400 text-lg md:text-xl xl:text-xl 3xl:text-2xl 4k:text-4xl">{error}</p>
         </div>
       ) : (
-        <div className="flex-1 flex flex-col items-center justify-center gap-3 md:gap-4 xl:gap-4 3xl:gap-6">
+        <div className="flex-1 flex flex-col items-center justify-center gap-3 md:gap-4 xl:gap-4 3xl:gap-6 4k:gap-8">
           {isEditing ? (
-            <form onSubmit={handleSubmit} className="w-full flex flex-col gap-3 md:gap-3.5 xl:gap-3.5 3xl:gap-4">
+            <form onSubmit={handleSubmit} className="w-full flex flex-col gap-3 md:gap-3.5 xl:gap-3.5 3xl:gap-4 4k:gap-6">
               <input
                 type="text"
                 value={displayAmountInput}
                 onChange={handleAmountInputChange}
-                className="text-3xl md:text-4xl xl:text-4xl 3xl:text-5xl font-bold text-center border-2 border-[#58a6ff] rounded-md p-2 md:p-3 xl:p-3 3xl:p-4 bg-[#0d1117] text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-[#58a6ff] focus:border-[#58a6ff]"
+                className="text-3xl md:text-4xl xl:text-4xl 3xl:text-5xl 4k:text-8xl font-bold text-center border-2 border-[#58a6ff] rounded-md p-2 md:p-3 xl:p-3 3xl:p-4 4k:p-6 bg-[#0d1117] text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-[#58a6ff] focus:border-[#58a6ff]"
                 placeholder="0"
                 autoFocus
               />
-              <div className="flex gap-2 md:gap-2.5 xl:gap-2.5 3xl:gap-3">
+              <div className="flex gap-2 md:gap-2.5 xl:gap-2.5 3xl:gap-3 4k:gap-5">
                 <button
                   type="submit"
                   disabled={isLoading}
-                  className="flex-1 px-3 py-2 md:px-4 md:py-2.5 xl:px-4 xl:py-2.5 3xl:px-6 3xl:py-3 text-base md:text-lg xl:text-lg 3xl:text-xl font-semibold bg-[#114C96] text-white rounded-md hover:bg-[#0d3a75] transition-colors disabled:opacity-50"
+                  className="flex-1 px-3 py-2 md:px-4 md:py-2.5 xl:px-4 xl:py-2.5 3xl:px-6 3xl:py-3 4k:px-10 4k:py-5 text-base md:text-lg xl:text-lg 3xl:text-xl 4k:text-3xl font-semibold bg-[#114C96] text-white rounded-md hover:bg-[#0d3a75] transition-colors disabled:opacity-50"
                 >
                   Save
                 </button>
@@ -169,17 +169,17 @@ const DagensTal: React.FC = () => {
                     setError(null);
                   }}
                   disabled={isLoading}
-                  className="flex-1 px-3 py-2 md:px-4 md:py-2.5 xl:px-4 xl:py-2.5 3xl:px-6 3xl:py-3 text-base md:text-lg xl:text-lg 3xl:text-xl font-semibold bg-[#30363d] text-white rounded-md hover:bg-[#484f58] transition-colors disabled:opacity-50"
+                  className="flex-1 px-3 py-2 md:px-4 md:py-2.5 xl:px-4 xl:py-2.5 3xl:px-6 3xl:py-3 4k:px-10 4k:py-5 text-base md:text-lg xl:text-lg 3xl:text-xl 4k:text-3xl font-semibold bg-[#30363d] text-white rounded-md hover:bg-[#484f58] transition-colors disabled:opacity-50"
                 >
                   Cancel
                 </button>
               </div>
-              {error && <p className="text-red-400 text-center text-sm md:text-base xl:text-base 3xl:text-lg">{error}</p>}
+              {error && <p className="text-red-400 text-center text-sm md:text-base xl:text-base 3xl:text-lg 4k:text-2xl">{error}</p>}
             </form>
           ) : (
             <button
               onClick={() => setIsEditing(true)}
-              className="text-3xl md:text-4xl lg:text-5xl xl:text-5xl 3xl:text-6xl font-bold text-white hover:text-[#58a6ff] transition-colors cursor-pointer"
+              className="text-3xl md:text-4xl lg:text-5xl xl:text-5xl 3xl:text-6xl 4k:text-9xl font-bold text-white hover:text-[#58a6ff] transition-colors cursor-pointer"
             >
               {formattedAmount}
             </button>

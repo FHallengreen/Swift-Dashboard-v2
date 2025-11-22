@@ -8,6 +8,7 @@ export default {
     extend: {
       screens: {
         '3xl': '1920px', // Large TVs (55"+)
+        '4k': '3840px',  // 4K displays - readable from 3m away
       },
     },
   },
