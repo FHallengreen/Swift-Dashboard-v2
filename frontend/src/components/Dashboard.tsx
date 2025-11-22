@@ -75,13 +75,15 @@ const Dashboard: React.FC = () => {
           {/* Bottom Row: Holidays and Invoice Chart */}
           <div className="flex flex-col gap-3 md:gap-4 xl:gap-5 3xl:gap-5 4k:gap-6 3xl:flex-1 3xl:min-h-0">
             {/* Holidays Section */}
-            <div className="min-h-[220px] 3xl:flex-[3] 3xl:min-h-0">
+            <div className="min-h-[220px] 3xl:flex-[2] 3xl:min-h-0">
               <Holidays />
             </div>
 
             {/* Invoice Chart */}
-            <div className="min-h-[350px] 3xl:flex-[1] 3xl:min-h-0 bg-[#161b22] rounded-lg shadow-lg p-2 md:p-3 xl:p-4 3xl:p-5 4k:p-8 border border-[#30363d] flex flex-col">
-              <InvoiceChart />
+            <div className="min-h-[350px] 3xl:flex-[1] 3xl:min-h-0">
+              <div className="bg-[#161b22] rounded-lg shadow-lg p-2 md:p-3 xl:p-4 3xl:p-5 4k:p-6 border border-[#30363d] h-full flex flex-col">
+                <InvoiceChart />
+              </div>
             </div>
           </div>
         </div>
