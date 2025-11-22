@@ -13,7 +13,7 @@ const Header: React.FC<HeaderProps> = ({ time, date, weekNumber }) => {
       <div className="w-full px-4 py-3 md:px-5 md:py-3.5 xl:px-6 xl:py-4 3xl:px-8 3xl:py-5 4k:px-12 4k:py-8 flex items-center justify-between">
         <div className="flex items-center gap-3 md:gap-4 xl:gap-5 3xl:gap-6 4k:gap-10">
           <Link to="/" className="flex-shrink-0">
-            <img src="/images/logo.svg" alt="Swift Logo" className="h-10 md:h-12 xl:h-14 3xl:h-20 4k:h-32 w-auto" />
+            <img src="/images/logo.svg" alt="Swift Logo" className="h-12 md:h-14 xl:h-16 3xl:h-24 4k:h-40 w-auto" />
           </Link>
           <nav className="flex gap-1.5 md:gap-2 3xl:gap-3 4k:gap-5">
             <Link 
@@ -32,10 +32,10 @@ const Header: React.FC<HeaderProps> = ({ time, date, weekNumber }) => {
         </div>
 
         <div className="text-right">
-          <h1 className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl 3xl:text-7xl 4k:text-[10rem] font-bold tracking-tight leading-none text-white">
+          <h1 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl 3xl:text-8xl 4k:text-[12rem] font-bold tracking-tight leading-none text-white">
             {time}
           </h1>
-          <p className="text-xs md:text-sm lg:text-base xl:text-xl 3xl:text-3xl 4k:text-6xl text-slate-300 font-medium leading-tight mt-0.5 md:mt-1 3xl:mt-2 4k:mt-4">
+          <p className="text-sm md:text-base lg:text-lg xl:text-2xl 3xl:text-4xl 4k:text-7xl text-slate-300 font-medium leading-tight mt-0.5 md:mt-1 3xl:mt-2 4k:mt-4">
             {date} <span className="text-[#58a6ff]">• {weekNumber}</span>
           </p>
         </div>

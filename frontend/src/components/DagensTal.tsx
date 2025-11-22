@@ -179,7 +179,7 @@ const DagensTal: React.FC = () => {
           ) : (
             <button
               onClick={() => setIsEditing(true)}
-              className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl 3xl:text-8xl 4k:text-[12rem] font-bold text-white hover:text-[#58a6ff] transition-colors cursor-pointer"
+              className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl 3xl:text-9xl 4k:text-[14rem] font-bold text-white hover:text-[#58a6ff] transition-colors cursor-pointer"
             >
               {formattedAmount}
             </button>
