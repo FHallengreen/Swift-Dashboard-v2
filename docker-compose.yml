@@ -5,7 +5,7 @@ services:
       dockerfile: Dockerfile
     container_name: swift_display_backend
     env_file:
-      - /home/frede/swift-secrets/dashboard.env
+      - /home/pi/swift-secrets/dashboard.env
     expose:
       - "8080"
     depends_on:
@@ -33,7 +33,7 @@ services:
       dockerfile: Dockerfile
     container_name: swift_display_frontend
     env_file:
-      - /home/frede/swift-secrets/dashboard.env
+      - /home/pi/swift-secrets/dashboard.env
     expose:
       - "80"
     depends_on:
@@ -62,14 +62,14 @@ services:
     restart: unless-stopped
     command: tunnel --config /etc/cloudflared/config.yml run
     volumes:
-      - /home/frede/swift-secrets/cloudflared:/etc/cloudflared
+      - /home/pi/swift-secrets/cloudflared:/etc/cloudflared
     networks:
       - swift_network
   db:
     image: mysql:8.0
     container_name: swift_display_db
     env_file:
-      - /home/frede/swift-secrets/dashboard.env
+      - /home/pi/swift-secrets/dashboard.env
     volumes:
       - db-data:/var/lib/mysql
       - ./Database/01-schema.sql:/docker-entrypoint-initdb.d/01-schema.sql
