@@ -93,7 +93,7 @@ const InvoiceChart: React.FC = () => {
         beginAtZero: true,
         grace: '5%',
         ticks: {
-          font: { size: window.innerWidth >= 3840 ? 48 : window.innerWidth >= 1920 ? 32 : window.innerWidth >= 1280 ? 20 : window.innerWidth >= 768 ? 16 : 12 },
+          font: { size: window.innerWidth >= 3840 ? 24 : window.innerWidth >= 1920 ? 18 : window.innerWidth >= 1280 ? 16 : window.innerWidth >= 768 ? 14 : 12 },
           color: '#94a3b8',
           callback: (tickValue: string | number): string => {
             return new Intl.NumberFormat('da-DK', { maximumSignificantDigits: 3 }).format(Number(tickValue));
@@ -105,7 +105,7 @@ const InvoiceChart: React.FC = () => {
       },
       x: {
         ticks: {
-          font: { size: window.innerWidth >= 3840 ? 52 : window.innerWidth >= 1920 ? 32 : window.innerWidth >= 1280 ? 20 : window.innerWidth >= 768 ? 16 : 12 },
+          font: { size: window.innerWidth >= 3840 ? 28 : window.innerWidth >= 1920 ? 20 : window.innerWidth >= 1280 ? 16 : window.innerWidth >= 768 ? 14 : 12 },
           color: '#94a3b8',
         },
         grid: {
@@ -120,9 +120,9 @@ const InvoiceChart: React.FC = () => {
         labels: {
           color: '#cbd5e1',
           font: {
-            size: window.innerWidth >= 3840 ? 56 : window.innerWidth >= 1920 ? 32 : window.innerWidth >= 1280 ? 22 : window.innerWidth >= 768 ? 18 : 14
+            size: window.innerWidth >= 3840 ? 32 : window.innerWidth >= 1920 ? 22 : window.innerWidth >= 1280 ? 18 : window.innerWidth >= 768 ? 16 : 14
           },
-          padding: window.innerWidth >= 3840 ? 40 : window.innerWidth >= 1920 ? 24 : window.innerWidth >= 1280 ? 16 : window.innerWidth >= 768 ? 12 : 8,
+          padding: window.innerWidth >= 3840 ? 20 : window.innerWidth >= 1920 ? 16 : window.innerWidth >= 1280 ? 12 : window.innerWidth >= 768 ? 10 : 8,
           usePointStyle: true,
           pointStyle: 'circle'
         }
@@ -138,7 +138,7 @@ const InvoiceChart: React.FC = () => {
         align: 'end',
         offset: -15,
         color: '#ffffff',
-        font: { size: window.innerWidth >= 3840 ? 44 : window.innerWidth >= 1920 ? 24 : window.innerWidth >= 1280 ? 16 : window.innerWidth >= 768 ? 14 : 11, weight: 'bold' },
+        font: { size: window.innerWidth >= 3840 ? 28 : window.innerWidth >= 1920 ? 20 : window.innerWidth >= 1280 ? 14 : window.innerWidth >= 768 ? 12 : 11, weight: 'bold' },
         textAlign: 'center',
         padding: 3,
       },
@@ -149,12 +149,12 @@ const InvoiceChart: React.FC = () => {
         bodyColor: '#cbd5e1',
         borderColor: 'rgba(88, 166, 255, 0.5)',
         borderWidth: 1,
-        padding: window.innerWidth >= 3840 ? 24 : window.innerWidth >= 1920 ? 14 : window.innerWidth >= 768 ? 10 : 6,
+        padding: window.innerWidth >= 3840 ? 16 : window.innerWidth >= 1920 ? 12 : window.innerWidth >= 768 ? 10 : 6,
         titleFont: {
-          size: window.innerWidth >= 3840 ? 36 : window.innerWidth >= 1920 ? 20 : window.innerWidth >= 1280 ? 14 : window.innerWidth >= 768 ? 12 : 10
+          size: window.innerWidth >= 3840 ? 24 : window.innerWidth >= 1920 ? 18 : window.innerWidth >= 1280 ? 14 : window.innerWidth >= 768 ? 12 : 10
         },
         bodyFont: {
-          size: window.innerWidth >= 3840 ? 32 : window.innerWidth >= 1920 ? 18 : window.innerWidth >= 1280 ? 13 : window.innerWidth >= 768 ? 11 : 9
+          size: window.innerWidth >= 3840 ? 22 : window.innerWidth >= 1920 ? 16 : window.innerWidth >= 1280 ? 13 : window.innerWidth >= 768 ? 11 : 9
         }
       }
     },
@@ -162,7 +162,7 @@ const InvoiceChart: React.FC = () => {
 
   return (
     <div className="h-full flex flex-col">
-      <h3 className="text-base md:text-lg xl:text-2xl 3xl:text-4xl 4k:text-6xl font-semibold text-slate-200 mb-2 md:mb-3 xl:mb-4 3xl:mb-6 4k:mb-8">Invoice Overview</h3>
+      <h3 className="text-base md:text-lg xl:text-xl 3xl:text-2xl 4k:text-4xl font-semibold text-slate-200 mb-1 md:mb-2 xl:mb-2 3xl:mb-3 4k:mb-4">Invoice Overview</h3>
       {isLoading ? (
         <p className="text-center text-slate-400 py-4 md:py-6 xl:py-8 3xl:py-10 4k:py-16 text-sm md:text-base xl:text-xl 3xl:text-3xl 4k:text-5xl">Loading chart...</p>
       ) : error ? (

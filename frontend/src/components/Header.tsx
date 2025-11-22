@@ -7,9 +7,20 @@ interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = ({ time, date, weekNumber }) => {
+  // Debug: Show screen width
+  const screenWidth = typeof window !== 'undefined' ? window.innerWidth : 0;
 
   return (
-    <header className="bg-[#161b22] shadow-lg border-b border-[#30363d] flex-shrink-0">
+    <header className="bg-[#161b22] shadow-lg border-b border-[#30363d] flex-shrink-0 relative">
+      {/* Debug indicator */}
+      <div className="absolute top-2 left-2 bg-red-500 text-white px-2 py-1 text-xs rounded z-50">
+        Width: {screenWidth}px | 
+        <span className="hidden 4k:inline"> 4K✓</span>
+        <span className="hidden 3xl:inline 4k:hidden"> 3XL✓</span>
+        <span className="hidden xl:inline 3xl:hidden"> XL✓</span>
+        <span className="hidden md:inline xl:hidden"> MD✓</span>
+        <span className="inline md:hidden"> BASE</span>
+      </div>
       <div className="w-full px-4 py-3 md:px-5 md:py-3.5 xl:px-6 xl:py-4 3xl:px-8 3xl:py-5 4k:px-12 4k:py-8 flex items-center justify-between">
         <div className="flex items-center gap-3 md:gap-4 xl:gap-5 3xl:gap-6 4k:gap-10">
           <Link to="/" className="flex-shrink-0">
