@@ -46,8 +46,6 @@ public class ContainerizationTests : IClassFixture<CustomWebApplicationFactory>
     public async Task EnvironmentVariables_AreLoaded()
     {
         // NOTE: This test validates that Docker environment configuration works
-        // CustomWebApplicationFactory sets "Test" environment
-        // In production Docker, env vars are loaded from .env file (DB_HOST, MYSQL_DATABASE, etc.)
         
         // Act - Verify application starts and responds (proves env vars work)
         var response = await _client.GetAsync("/api/info");
