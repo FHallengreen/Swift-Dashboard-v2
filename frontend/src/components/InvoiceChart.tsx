@@ -161,14 +161,14 @@ const InvoiceChart: React.FC = () => {
   };
 
   return (
-    <div className="h-full min-h-[350px] 3xl:min-h-[500px] flex flex-col">
+    <div className="h-full min-h-[350px] 3xl:min-h-[700px] flex flex-col">
       <h3 className="text-base md:text-lg xl:text-xl 2xl:text-2xl 4k:text-4xl font-semibold text-slate-200 mb-1 md:mb-2 xl:mb-2 2xl:mb-3 4k:mb-4">Invoice Overview</h3>
       {isLoading ? (
         <p className="text-center text-slate-400 py-4 md:py-6 xl:py-8 2xl:py-10 4k:py-16 text-sm md:text-base xl:text-xl 2xl:text-3xl 4k:text-5xl">Loading chart...</p>
       ) : error ? (
         <p className="text-center text-red-400 py-4 md:py-6 xl:py-8 2xl:py-10 4k:py-16 text-sm md:text-base xl:text-xl 2xl:text-3xl 4k:text-5xl">{error}</p>
       ) : (
-        <div className="flex-1 min-h-[300px] 3xl:min-h-[450px]">
+        <div className="flex-1 min-h-[300px] 3xl:min-h-[650px]">
           <Bar data={chartData} options={chartOptions} />
         </div>
       )}
