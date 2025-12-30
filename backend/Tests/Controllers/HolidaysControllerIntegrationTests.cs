@@ -20,11 +20,11 @@ public class HolidaysControllerIntegrationTests : IClassFixture<CustomWebApplica
     public async Task GetUpcomingHolidays_ReturnsOk()
     {
         // Act
-        var response = await _client.GetAsync("/api/holidays/upcoming");
+        var response = await _client.GetAsync("/api/holidays/upcoming", TestContext.Current.CancellationToken);
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.OK);
-        var holidays = await response.Content.ReadFromJsonAsync<List<Holiday>>();
+        var holidays = await response.Content.ReadFromJsonAsync<List<Holiday>>(cancellationToken: TestContext.Current.CancellationToken);
         holidays.Should().NotBeNull();
     }
 
@@ -35,11 +35,11 @@ public class HolidaysControllerIntegrationTests : IClassFixture<CustomWebApplica
         var startDate = "2025-01-01";
 
         // Act
-        var response = await _client.GetAsync($"/api/holidays/upcoming?startDateStr={startDate}");
+        var response = await _client.GetAsync($"/api/holidays/upcoming?startDateStr={startDate}", TestContext.Current.CancellationToken);
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.OK);
-        var holidays = await response.Content.ReadFromJsonAsync<List<Holiday>>();
+        var holidays = await response.Content.ReadFromJsonAsync<List<Holiday>>(cancellationToken: TestContext.Current.CancellationToken);
         holidays.Should().NotBeNull();
     }
 
@@ -50,7 +50,7 @@ public class HolidaysControllerIntegrationTests : IClassFixture<CustomWebApplica
         var startDate = "invalid-date";
 
         // Act
-        var response = await _client.GetAsync($"/api/holidays/upcoming?startDateStr={startDate}");
+        var response = await _client.GetAsync($"/api/holidays/upcoming?startDateStr={startDate}", TestContext.Current.CancellationToken);
 
         // Assert
         // Should fallback to current date and still return OK

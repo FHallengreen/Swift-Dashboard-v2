@@ -32,14 +32,14 @@ public class InfoControllerIntegrationTests : IClassFixture<CustomWebApplication
         // Arrange
         var info = new Info { Id = 1, Text = "Test information" };
         _dbContext.Info.Add(info);
-        await _dbContext.SaveChangesAsync();
+        await _dbContext.SaveChangesAsync(TestContext.Current.CancellationToken);
 
         // Act
-        var response = await _client.GetAsync("/api/info");
+        var response = await _client.GetAsync("/api/info", TestContext.Current.CancellationToken);
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.OK);
-        var result = await response.Content.ReadFromJsonAsync<Dictionary<string, string>>();
+        var result = await response.Content.ReadFromJsonAsync<Dictionary<string, string>>(cancellationToken: TestContext.Current.CancellationToken);
         result.Should().NotBeNull();
         result!["text"].Should().Be("Test information");
     }
@@ -48,11 +48,11 @@ public class InfoControllerIntegrationTests : IClassFixture<CustomWebApplication
     public async Task GetInfo_ReturnsEmptyText_WhenDoesNotExist()
     {
         // Act
-        var response = await _client.GetAsync("/api/info");
+        var response = await _client.GetAsync("/api/info", TestContext.Current.CancellationToken);
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.OK);
-        var result = await response.Content.ReadFromJsonAsync<Dictionary<string, string>>();
+        var result = await response.Content.ReadFromJsonAsync<Dictionary<string, string>>(cancellationToken: TestContext.Current.CancellationToken);
         result.Should().NotBeNull();
         result!["text"].Should().BeEmpty();
     }
@@ -64,12 +64,12 @@ public class InfoControllerIntegrationTests : IClassFixture<CustomWebApplication
         var request = new UpdateInfoRequest { Text = "New information" };
 
         // Act
-        var response = await _client.PostAsJsonAsync("/api/info", request);
+        var response = await _client.PostAsJsonAsync("/api/info", request, cancellationToken: TestContext.Current.CancellationToken);
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.OK);
         
-        var savedInfo = await _dbContext.Info.FirstOrDefaultAsync(i => i.Id == 1);
+        var savedInfo = await _dbContext.Info.FirstOrDefaultAsync(i => i.Id == 1, cancellationToken: TestContext.Current.CancellationToken);
         savedInfo.Should().NotBeNull();
         savedInfo!.Text.Should().Be("New information");
     }
@@ -78,28 +78,28 @@ public class InfoControllerIntegrationTests : IClassFixture<CustomWebApplication
     public async Task UpdateInfo_UpdatesExistingInfo()
     {
         // Arrange - clear any existing data first
-        var existing = await _dbContext.Info.FirstOrDefaultAsync(i => i.Id == 1);
+        var existing = await _dbContext.Info.FirstOrDefaultAsync(i => i.Id == 1, cancellationToken: TestContext.Current.CancellationToken);
         if (existing != null)
         {
             _dbContext.Info.Remove(existing);
-            await _dbContext.SaveChangesAsync();
+            await _dbContext.SaveChangesAsync(TestContext.Current.CancellationToken);
         }
         
         var existingInfo = new Info { Id = 1, Text = "Old text" };
         _dbContext.Info.Add(existingInfo);
-        await _dbContext.SaveChangesAsync();
+        await _dbContext.SaveChangesAsync(TestContext.Current.CancellationToken);
 
         var request = new UpdateInfoRequest { Text = "Updated text" };
 
         // Act
-        var response = await _client.PostAsJsonAsync("/api/info", request);
+        var response = await _client.PostAsJsonAsync("/api/info", request, cancellationToken: TestContext.Current.CancellationToken);
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.OK);
         
         // Reload from database to get fresh data (not cached)
         _dbContext.ChangeTracker.Clear();
-        var updatedInfo = await _dbContext.Info.FirstOrDefaultAsync(i => i.Id == 1);
+        var updatedInfo = await _dbContext.Info.FirstOrDefaultAsync(i => i.Id == 1, cancellationToken: TestContext.Current.CancellationToken);
         updatedInfo.Should().NotBeNull();
         updatedInfo!.Text.Should().Be("Updated text");
     }

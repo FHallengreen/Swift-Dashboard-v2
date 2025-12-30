@@ -52,7 +52,17 @@ builder.Services.AddMemoryCache();
 // Register application services
 builder.Services.AddScoped<IInvoiceService, InvoiceService>();
 builder.Services.AddScoped<IInfoService, InfoService>();
-builder.Services.AddScoped<IHolidayService, HolidayService>();
+
+if (builder.Environment.IsEnvironment("Testing"))
+{
+    builder.Services.AddScoped<IHolidayService, NoOpHolidayService>();
+}
+else
+{
+    builder.Services.AddScoped<IHolidayService, HolidayService>();
+}
+
+
 
 builder.Services.AddSignalR();
 

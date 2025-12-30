@@ -42,7 +42,7 @@ public class InfoServiceTests : IDisposable
         // Arrange
         var info = new Info { Id = 1, Text = "Test information" };
         _dbContext.Info.Add(info);
-        await _dbContext.SaveChangesAsync();
+        await _dbContext.SaveChangesAsync(TestContext.Current.CancellationToken);
 
         // Act
         var result = await _service.GetInfoAsync();
@@ -73,7 +73,7 @@ public class InfoServiceTests : IDisposable
         await _service.UpdateInfoAsync(text);
 
         // Assert
-        var info = await _dbContext.Info.FirstOrDefaultAsync(i => i.Id == 1);
+        var info = await _dbContext.Info.FirstOrDefaultAsync(i => i.Id == 1, cancellationToken: TestContext.Current.CancellationToken);
         info.Should().NotBeNull();
         info!.Text.Should().Be(text);
     }
@@ -84,7 +84,7 @@ public class InfoServiceTests : IDisposable
         // Arrange
         var existingInfo = new Info { Id = 1, Text = "Old text" };
         _dbContext.Info.Add(existingInfo);
-        await _dbContext.SaveChangesAsync();
+        await _dbContext.SaveChangesAsync(TestContext.Current.CancellationToken);
 
         var newText = "Updated text";
 
@@ -92,11 +92,11 @@ public class InfoServiceTests : IDisposable
         await _service.UpdateInfoAsync(newText);
 
         // Assert
-        var info = await _dbContext.Info.FirstOrDefaultAsync(i => i.Id == 1);
+        var info = await _dbContext.Info.FirstOrDefaultAsync(i => i.Id == 1, cancellationToken: TestContext.Current.CancellationToken);
         info.Should().NotBeNull();
         info!.Text.Should().Be(newText);
 
-        var infoCount = await _dbContext.Info.CountAsync();
+        var infoCount = await _dbContext.Info.CountAsync(cancellationToken: TestContext.Current.CancellationToken);
         infoCount.Should().Be(1);
     }
 
@@ -107,7 +107,7 @@ public class InfoServiceTests : IDisposable
         await _service.UpdateInfoAsync(null);
 
         // Assert
-        var info = await _dbContext.Info.FirstOrDefaultAsync(i => i.Id == 1);
+        var info = await _dbContext.Info.FirstOrDefaultAsync(i => i.Id == 1, cancellationToken: TestContext.Current.CancellationToken);
         info.Should().NotBeNull();
         info!.Text.Should().BeNull();
     }
@@ -119,7 +119,7 @@ public class InfoServiceTests : IDisposable
         await _service.UpdateInfoAsync("");
 
         // Assert
-        var info = await _dbContext.Info.FirstOrDefaultAsync(i => i.Id == 1);
+        var info = await _dbContext.Info.FirstOrDefaultAsync(i => i.Id == 1, cancellationToken: TestContext.Current.CancellationToken);
         info.Should().NotBeNull();
         info!.Text.Should().BeEmpty();
     }

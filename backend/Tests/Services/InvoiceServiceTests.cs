@@ -53,7 +53,7 @@ public class InvoiceServiceTests : IDisposable
         result.Month.Should().Be(today.Month);
         result.Amount.Should().Be(amount);
 
-        var savedInvoice = await _dbContext.Invoices.FirstOrDefaultAsync();
+        var savedInvoice = await _dbContext.Invoices.FirstOrDefaultAsync(cancellationToken: TestContext.Current.CancellationToken);
         savedInvoice.Should().NotBeNull();
         savedInvoice!.Amount.Should().Be(amount);
     }
@@ -70,7 +70,7 @@ public class InvoiceServiceTests : IDisposable
             Amount = 500m
         };
         _dbContext.Invoices.Add(existingInvoice);
-        await _dbContext.SaveChangesAsync();
+        await _dbContext.SaveChangesAsync(TestContext.Current.CancellationToken);
 
         var newAmount = 1500m;
 
@@ -81,7 +81,7 @@ public class InvoiceServiceTests : IDisposable
         result.Should().NotBeNull();
         result.Amount.Should().Be(newAmount);
 
-        var invoiceCount = await _dbContext.Invoices.CountAsync();
+        var invoiceCount = await _dbContext.Invoices.CountAsync(cancellationToken: TestContext.Current.CancellationToken);
         invoiceCount.Should().Be(1);
     }
 
@@ -96,7 +96,7 @@ public class InvoiceServiceTests : IDisposable
             new() { Year = 2024, Month = 3, Amount = 900m }
         };
         _dbContext.Invoices.AddRange(invoices);
-        await _dbContext.SaveChangesAsync();
+        await _dbContext.SaveChangesAsync(TestContext.Current.CancellationToken);
 
         // Act
         var result = await _service.GetAllInvoicesAsync();
@@ -128,7 +128,7 @@ public class InvoiceServiceTests : IDisposable
             Amount = 2500m
         };
         _dbContext.Invoices.Add(currentMonthInvoice);
-        await _dbContext.SaveChangesAsync();
+        await _dbContext.SaveChangesAsync(TestContext.Current.CancellationToken);
 
         // Act
         var result = await _service.GetCurrentMonthInvoiceAsync();
@@ -168,7 +168,7 @@ public class InvoiceServiceTests : IDisposable
         result.Amount.Should().Be(amount);
 
         var savedInvoice = await _dbContext.Invoices
-            .FirstOrDefaultAsync(i => i.Year == year && i.Month == month);
+            .FirstOrDefaultAsync(i => i.Year == year && i.Month == month, cancellationToken: TestContext.Current.CancellationToken);
         savedInvoice.Should().NotBeNull();
     }
 
@@ -185,7 +185,7 @@ public class InvoiceServiceTests : IDisposable
             Amount = 1000m
         };
         _dbContext.Invoices.Add(existingInvoice);
-        await _dbContext.SaveChangesAsync();
+        await _dbContext.SaveChangesAsync(TestContext.Current.CancellationToken);
 
         var newAmount = 2000m;
 
@@ -197,7 +197,7 @@ public class InvoiceServiceTests : IDisposable
         result.Amount.Should().Be(newAmount);
 
         var invoiceCount = await _dbContext.Invoices
-            .CountAsync(i => i.Year == year && i.Month == month);
+            .CountAsync(i => i.Year == year && i.Month == month, cancellationToken: TestContext.Current.CancellationToken);
         invoiceCount.Should().Be(1);
     }
 

@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
-import api from '../api';
-import * as signalR from '@microsoft/signalr';
+import { useEffect, useState } from "react";
+import api from "../api";
+import * as signalR from "@microsoft/signalr";
 
 interface Invoice {
   year: number;
@@ -8,14 +8,8 @@ interface Invoice {
   amount: number;
 }
 
-const danishWholeNumberFormat = new Intl.NumberFormat('da-DK', {
-  style: 'decimal',
-  minimumFractionDigits: 0,
-  maximumFractionDigits: 0,
-});
-
-const danishDecimalDisplayFormat = new Intl.NumberFormat('da-DK', {
-  style: 'decimal',
+const danishDecimalDisplayFormat = new Intl.NumberFormat("da-DK", {
+  style: "decimal",
   minimumFractionDigits: 2,
   maximumFractionDigits: 2,
 });
@@ -26,137 +20,154 @@ const DagensTal: React.FC = () => {
     month: new Date().getMonth() + 1,
     amount: 0,
   });
-  const [amountInput, setAmountInput] = useState<string>('');
-  const [displayAmountInput, setDisplayAmountInput] = useState<string>('');
 
-  const [isEditing, setIsEditing] = useState<boolean>(false);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [draft, setDraft] = useState<string>(""); // user input
+  const [isEditing, setIsEditing] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchCurrentInvoice = () => {
+    const fetchCurrentInvoice = async () => {
       setIsLoading(true);
-      api
-        .get('/invoices/current')
-        .then((res) => {
-          setCurrentInvoice(res.data);
-          setAmountInput(res.data.amount.toString());
-          setDisplayAmountInput(danishWholeNumberFormat.format(res.data.amount));
-        })
-        .catch((error) => {
-          console.error('Error fetching current invoice:', error);
-          setError('Failed to load Dagens Tal');
-        })
-        .finally(() => setIsLoading(false));
+      try {
+        const res = await api.get("/invoices/current");
+        setCurrentInvoice(res.data);
+      } catch (err) {
+        console.error("Error fetching current invoice:", err);
+        setError("Failed to load Dagens Tal");
+      } finally {
+        setIsLoading(false);
+      }
     };
 
     fetchCurrentInvoice();
 
     const connection = new signalR.HubConnectionBuilder()
-      .withUrl('/api/invoiceHub')
+      .withUrl("/api/invoiceHub")
       .withAutomaticReconnect()
       .build();
 
     connection.on("ReceiveInvoiceUpdate", (data: Invoice) => {
-      console.log("SignalR: ReceiveInvoiceUpdate", data);
       const today = new Date();
-      if (data.year === today.getFullYear() && data.month === (today.getMonth() + 1)) {
+      if (
+        data.year === today.getFullYear() &&
+        data.month === today.getMonth() + 1
+      ) {
         setCurrentInvoice(data);
-        setAmountInput(data.amount.toString());
+
+        // Do NOT overwrite user input while editing
         if (!isEditing) {
-            setDisplayAmountInput(danishWholeNumberFormat.format(data.amount));
+          setDraft(danishDecimalDisplayFormat.format(data.amount));
         }
       }
-      localStorage.setItem('invoiceDataTimestamp', Date.now().toString());
-      window.dispatchEvent(new CustomEvent('invoicedataupdated'));
     });
 
-    connection.start()
-      .then(() => console.log('SignalR Connected for DagensTal'))
-      .catch(err => console.error('SignalR Connection Error: ', err));
+    connection
+      .start()
+      .then(() => console.log("SignalR connected"))
+      .catch((err) => console.error("SignalR error:", err));
 
     return () => {
       connection.stop();
     };
   }, [isEditing]);
 
-  const handleAmountInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const inputValue = e.target.value;
-    const rawNumericValue = inputValue.replace(/\D/g, '');
+  const parseDaDecimal = (value: string): number | null => {
+    if (!value.trim()) return null;
 
-    setAmountInput(rawNumericValue);
+    // Remove spaces
+    let s = value.replace(/\s/g, "");
 
-    if (rawNumericValue === '') {
-      setDisplayAmountInput('');
+    // Find last occurrence of . or ,
+    const lastDot = s.lastIndexOf(".");
+    const lastComma = s.lastIndexOf(",");
+
+    let decimalSeparator = "";
+
+    if (lastDot > lastComma) decimalSeparator = ".";
+    else if (lastComma > lastDot) decimalSeparator = ",";
+
+    if (decimalSeparator) {
+      const parts = s.split(decimalSeparator);
+      const integerPart = parts[0].replace(/[.,]/g, "");
+      const decimalPart = parts[1] ?? "";
+      s = `${integerPart}.${decimalPart}`;
     } else {
-      const num = parseInt(rawNumericValue, 10);
-      if (!isNaN(num)) {
-        setDisplayAmountInput(danishWholeNumberFormat.format(num));
-      } else {
-        setDisplayAmountInput(rawNumericValue); 
-      }
+      // No decimal separator → whole number
+      s = s.replace(/[^\d]/g, "");
     }
+
+    const num = Number(s);
+    return Number.isFinite(num) ? num : null;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (amountInput === '') {
-        setError('Please enter a valid number');
-        return;
-    }
-    const newAmount = parseInt(amountInput, 10);
-    if (isNaN(newAmount)) {
-      setError('Please enter a valid number');
+
+    const parsed = parseDaDecimal(draft);
+    if (parsed === null) {
+      setError("Please enter a valid number");
       return;
     }
 
     setIsLoading(true);
     setError(null);
+
     try {
-      await api.post('/invoices', newAmount, {
-        headers: { 'Content-Type': 'application/json' },
+      await api.post("/invoices", parsed, {
+        headers: { "Content-Type": "application/json" },
       });
-      setCurrentInvoice({ ...currentInvoice, amount: newAmount });
-      setDisplayAmountInput(danishWholeNumberFormat.format(newAmount));
+
+      setCurrentInvoice({ ...currentInvoice, amount: parsed });
       setIsEditing(false);
-    } catch (error) {
-      console.error('Error submitting invoice:', error);
-      setError('Failed to update Dagens Tal');
+    } catch {
+      setError("Failed to update Dagens Tal");
     } finally {
       setIsLoading(false);
     }
   };
 
-  const formattedAmount = `${danishDecimalDisplayFormat.format(currentInvoice.amount)} EUR`;
+  const formattedAmount = `${danishDecimalDisplayFormat.format(
+    currentInvoice.amount
+  )} EUR`;
 
   return (
     <div className="h-full flex flex-col">
-      <h2 className="text-2xl md:text-3xl xl:text-4xl 3xl:text-6xl 4k:text-8xl font-bold text-slate-200 mb-3 md:mb-4 xl:mb-5 3xl:mb-8 4k:mb-10">Dagens Tal</h2>
+      <h2 className="text-2xl md:text-3xl xl:text-4xl 3xl:text-6xl 4k:text-8xl font-bold text-slate-200 mb-3">
+        Dagens Tal
+      </h2>
+
       {isLoading ? (
         <div className="flex-1 flex items-center justify-center">
-          <p className="text-slate-400 text-lg md:text-xl xl:text-xl 3xl:text-2xl 4k:text-4xl">Loading...</p>
+          <p className="text-slate-400 text-lg">Loading...</p>
         </div>
       ) : error ? (
         <div className="flex-1 flex items-center justify-center">
-          <p className="text-red-400 text-lg md:text-xl xl:text-xl 3xl:text-2xl 4k:text-4xl">{error}</p>
+          <p className="text-red-400 text-lg">{error}</p>
         </div>
       ) : (
-        <div className="flex-1 flex flex-col items-center justify-center gap-3 md:gap-4 xl:gap-4 3xl:gap-6 4k:gap-8">
+        <div className="flex-1 flex flex-col items-center justify-center gap-4">
           {isEditing ? (
-            <form onSubmit={handleSubmit} className="w-full flex flex-col gap-3 md:gap-3.5 xl:gap-3.5 3xl:gap-4 4k:gap-6">
+            <form
+              onSubmit={handleSubmit}
+              className="w-full flex flex-col gap-4"
+            >
               <input
                 type="text"
-                value={displayAmountInput}
-                onChange={handleAmountInputChange}
-                className="text-3xl md:text-4xl xl:text-4xl 3xl:text-5xl 4k:text-8xl font-bold text-center border-2 border-[#58a6ff] rounded-md p-2 md:p-3 xl:p-3 3xl:p-4 4k:p-6 bg-[#0d1117] text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-[#58a6ff] focus:border-[#58a6ff]"
-                placeholder="0"
+                value={draft}
+                onChange={(e) =>
+                  setDraft(e.target.value.replace(/[^\d.,]/g, ""))
+                }
                 autoFocus
+                className="text-4xl font-bold text-center border-2 border-[#58a6ff] rounded-md p-3 bg-[#0d1117] text-white focus:outline-none focus:ring-2 focus:ring-[#58a6ff]"
+                data-testid="invoice-input"
               />
-              <div className="flex gap-2 md:gap-2.5 xl:gap-2.5 3xl:gap-3 4k:gap-5">
+
+              <div className="flex gap-3">
                 <button
                   type="submit"
-                  disabled={isLoading}
-                  className="flex-1 px-3 py-2 md:px-4 md:py-2.5 xl:px-4 xl:py-2.5 3xl:px-6 3xl:py-3 4k:px-10 4k:py-5 text-base md:text-lg xl:text-lg 3xl:text-xl 4k:text-3xl font-semibold bg-[#114C96] text-white rounded-md hover:bg-[#0d3a75] transition-colors disabled:opacity-50"
+                  className="flex-1 bg-[#114C96] text-white font-semibold py-3 rounded-md hover:bg-[#0d3a75]"
+                  data-testid="invoice-submit"
                 >
                   Save
                 </button>
@@ -164,22 +175,24 @@ const DagensTal: React.FC = () => {
                   type="button"
                   onClick={() => {
                     setIsEditing(false);
-                    setAmountInput(currentInvoice.amount.toString());
-                    setDisplayAmountInput(danishWholeNumberFormat.format(currentInvoice.amount));
                     setError(null);
                   }}
-                  disabled={isLoading}
-                  className="flex-1 px-3 py-2 md:px-4 md:py-2.5 xl:px-4 xl:py-2.5 3xl:px-6 3xl:py-3 4k:px-10 4k:py-5 text-base md:text-lg xl:text-lg 3xl:text-xl 4k:text-3xl font-semibold bg-[#30363d] text-white rounded-md hover:bg-[#484f58] transition-colors disabled:opacity-50"
+                  className="flex-1 bg-[#30363d] text-white font-semibold py-3 rounded-md hover:bg-[#484f58]"
                 >
                   Cancel
                 </button>
               </div>
-              {error && <p className="text-red-400 text-center text-sm md:text-base xl:text-base 3xl:text-lg 4k:text-2xl">{error}</p>}
             </form>
           ) : (
             <button
-              onClick={() => setIsEditing(true)}
-              className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl 3xl:text-9xl 4k:text-[14rem] font-bold text-white hover:text-[#58a6ff] transition-colors cursor-pointer"
+              onClick={() => {
+                setDraft(
+                  danishDecimalDisplayFormat.format(currentInvoice.amount)
+                );
+                setIsEditing(true);
+              }}
+              className="text-6xl font-bold text-white hover:text-[#58a6ff] transition-colors"
+              data-testid="invoice-amount"
             >
               {formattedAmount}
             </button>
