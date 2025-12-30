@@ -102,7 +102,6 @@ public class HolidayService : IHolidayService
                 }
             }
 
-            _logger.LogInformation("Total upcoming holidays found: {Count}", allUpcomingHolidays.Count);
             return allUpcomingHolidays.OrderBy(h => h.Date).ThenBy(h => h.CountryName).ThenBy(h => h.Name);
         }
         catch (Exception ex)
@@ -124,7 +123,6 @@ public class HolidayService : IHolidayService
 
         var httpClient = _httpClientFactory.CreateClient();
         var url = $"https://date.nager.at/api/v3/PublicHolidays/{year}/{countryCode}";
-        _logger.LogInformation("Fetching holidays for {Country} for year {Year}: {Url}", countryCode, year, url);
 
         try
         {
@@ -132,14 +130,11 @@ public class HolidayService : IHolidayService
 
             if (!response.IsSuccessStatusCode)
             {
-                _logger.LogWarning("Failed to fetch holidays for {Country} year {Year}: {StatusCode} - {Reason}", 
-                    countryCode, year, response.StatusCode, response.ReasonPhrase);
                 return new List<Holiday>();
             }
 
             if (response.StatusCode == System.Net.HttpStatusCode.NoContent)
             {
-                _logger.LogInformation("No holiday data available for {Country} year {Year} (204 No Content)", countryCode, year);
                 cachedHolidays = new List<Holiday>();
             }
             else
