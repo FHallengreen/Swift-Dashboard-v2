@@ -10,7 +10,7 @@ import {
   Legend,
   type ChartOptions,
 } from 'chart.js';
-import ChartDataLabels, { type Context } from 'chartjs-plugin-datalabels'; // Use "type Context"
+import ChartDataLabels, { type Context } from 'chartjs-plugin-datalabels';
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ChartDataLabels);
 
 import api from '../api';
@@ -46,7 +46,7 @@ const InvoiceChart: React.FC = () => {
     // Listen for custom event when invoice data is updated by DagensTal or SignalR
     const handleInvoiceDataUpdated = () => {
       console.log('InvoiceChart: invoicedataupdated event received');
-      fetchInvoiceData(); // Refetch data when notified
+      fetchInvoiceData();
     };
 
     window.addEventListener('invoicedataupdated', handleInvoiceDataUpdated);
@@ -57,28 +57,31 @@ const InvoiceChart: React.FC = () => {
   }, [fetchInvoiceData]);
 
   const xValues = ["Januar", "Februar", "Marts", "April", "Maj", "Juni", "Juli", "August", "September", "Oktober", "November", "December"];
+  const currentYear = new Date().getFullYear();
+  const previousYear = currentYear - 1;
+
   const chartData = {
     labels: xValues,
     datasets: [
       {
-        label: '2024',
+        label: `${previousYear}`,
         backgroundColor: 'rgba(100, 116, 139, 0.7)',
         borderColor: 'rgba(100, 116, 139, 1)',
         borderWidth: 0,
         borderRadius: 4,
         data: xValues.map((_, i) => {
-          const inv = invoiceData.find((inv) => inv.year === 2024 && inv.month === i + 1);
+          const inv = invoiceData.find((inv) => inv.year === previousYear && inv.month === i + 1);
           return inv ? inv.amount : 0;
         }),
       },
       {
-        label: '2025',
+        label: `${currentYear}`,
         backgroundColor: 'rgba(17, 76, 150, 0.9)',
         borderColor: 'rgba(17, 76, 150, 1)',
         borderWidth: 0,
         borderRadius: 4,
         data: xValues.map((_, i) => {
-          const inv = invoiceData.find((inv) => inv.year === 2025 && inv.month === i + 1);
+          const inv = invoiceData.find((inv) => inv.year === currentYear && inv.month === i + 1);
           return inv ? inv.amount : 0;
         }),
       },
@@ -114,7 +117,7 @@ const InvoiceChart: React.FC = () => {
       },
     },
     plugins: {
-      legend: { 
+      legend: {
         display: true,
         position: 'top',
         labels: {
@@ -161,7 +164,7 @@ const InvoiceChart: React.FC = () => {
   };
 
   return (
-    <div className="h-full min-h-[350px] 3xl:min-h-[700px] flex flex-col">
+    <div className="h-full min-h-[400px] 3xl:min-h-[900px] flex flex-col">
       <h3 className="text-base md:text-lg xl:text-xl 2xl:text-2xl 4k:text-4xl font-semibold text-slate-200 mb-1 md:mb-2 xl:mb-2 2xl:mb-3 4k:mb-4">Invoice Overview</h3>
       {isLoading ? (
         <p className="text-center text-slate-400 py-4 md:py-6 xl:py-8 2xl:py-10 4k:py-16 text-sm md:text-base xl:text-xl 2xl:text-3xl 4k:text-5xl">Loading chart...</p>
