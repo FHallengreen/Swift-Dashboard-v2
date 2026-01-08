@@ -163,7 +163,7 @@ public class HolidayService : IHolidayService
                 }
             }
 
-            _memoryCache.Set(cacheKey, cachedHolidays, TimeSpan.FromDays(1));
+            _memoryCache.Set(cacheKey, cachedHolidays, TimeSpan.FromDays(30));
             return cachedHolidays;
         }
         catch (Exception ex)
