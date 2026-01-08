@@ -1,12 +1,20 @@
 # Swift Display Dashboard
 
-A real-time business dashboard application designed for Raspberry Pi and TV displays. Built with React, C#, and MySQL.
+Real-time business dashboard for Raspberry Pi displays. Built with React, .NET, and MySQL.
+
+## Development
+
+Start the development environment:
+```bash
+docker compose -f docker-compose.dev.yml up
+```
+
+Access at: http://localhost
 
 ## Testing
 
-### Quick Start
-
-**Run all tests from test folder**
+Run backend tests:
 ```bash
-# Linux/macOS
-./run-tests.sh
+cd backend/Tests
+dotnet test
+```
