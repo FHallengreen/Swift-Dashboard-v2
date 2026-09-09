@@ -45,10 +45,28 @@ jobs:
           clean: true
           fetch-depth: 0
 
+      - name: Pull base images (with retry)
+        run: |
+          for img in mcr.microsoft.com/dotnet/sdk:10.0 \
+                     mcr.microsoft.com/dotnet/aspnet:10.0 \
+                     node:24-alpine \
+                     nginx:1.28-alpine \
+                     nginx:alpine; do
+            for attempt in 1 2 3; do
+              docker pull "$img" && break
+              if [ "$attempt" = "3" ]; then
+                echo "::error::Failed to pull $img after 3 attempts"
+                exit 1
+              fi
+              echo "Pull of $img failed (attempt $attempt), retrying in 15s..."
+              sleep 15
+            done
+          done
+
       - name: Rebuild and restart services
         run: |
           echo "Rebuilding backend and frontend containers..."
           cd ${{ github.workspace }}
-          docker compose -f docker-compose.yml build --no-cache backend frontend
+          docker compose -f docker-compose.yml build backend frontend
           echo "Restarting all services including cloudflared..."
           docker compose -f docker-compose.yml up -d --force-recreate nginx backend frontend
