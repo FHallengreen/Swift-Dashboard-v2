@@ -4,6 +4,10 @@ using System.Text.Json;
 
 namespace PlaywrightTests;
 
+// Shares the MySQL database with the controller integration tests, whose
+// Dispose() clears the Invoices table. Must run in the same collection so it
+// is never interleaved with them.
+[Collection("Database collection")]
 public class FrontendE2ETest
 {
 
