@@ -113,7 +113,7 @@ const DatabaseView: React.FC = () => {
     
     setGroupedInvoices(prev => {
       const existingInvoiceIndex = prev[year]?.findIndex(inv => inv.month === month);
-      let updatedYearInvoices = [...(prev[year] || [])];
+      const updatedYearInvoices = [...(prev[year] || [])];
       if (existingInvoiceIndex !== undefined && existingInvoiceIndex > -1) {
         updatedYearInvoices[existingInvoiceIndex] = { ...updatedYearInvoices[existingInvoiceIndex], amount: newAmount };
       } else {

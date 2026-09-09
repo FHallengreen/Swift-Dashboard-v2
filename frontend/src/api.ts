@@ -1,4 +1,4 @@
-import axios, { AxiosError, type AxiosResponse } from 'axios';
+import axios, { AxiosError, type AxiosResponse, type InternalAxiosRequestConfig } from 'axios';
 import type { Holiday } from './interface/holiday';
 
 const api = axios.create({
@@ -13,7 +13,8 @@ const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 api.interceptors.response.use(
   (response: AxiosResponse) => response,
   async (error: AxiosError) => {
-    const config = error.config as any;
+    const config = error.config as (InternalAxiosRequestConfig & { _retryCount?: number }) | undefined;
+    if (!config) return Promise.reject(error);
     
     // If it's a network error and we haven't exceeded retries, retry
     if ((!error.response || error.response.status >= 500) && (!config._retryCount || config._retryCount < MAX_RETRIES)) {

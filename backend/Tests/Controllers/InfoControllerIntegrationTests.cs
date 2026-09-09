@@ -29,7 +29,10 @@ public class InfoControllerIntegrationTests : IClassFixture<CustomWebApplication
     [Fact]
     public async Task GetInfo_ReturnsOkWithInfo_WhenExists()
     {
-        // Arrange
+        // Arrange - the schema seeds an Info row with Id 1, so clear it first
+        _dbContext.Info.RemoveRange(_dbContext.Info);
+        await _dbContext.SaveChangesAsync(TestContext.Current.CancellationToken);
+
         var info = new Info { Id = 1, Text = "Test information" };
         _dbContext.Info.Add(info);
         await _dbContext.SaveChangesAsync(TestContext.Current.CancellationToken);
@@ -47,6 +50,10 @@ public class InfoControllerIntegrationTests : IClassFixture<CustomWebApplication
     [Fact]
     public async Task GetInfo_ReturnsEmptyText_WhenDoesNotExist()
     {
+        // Arrange - the schema seeds an Info row, so remove it to establish the precondition
+        _dbContext.Info.RemoveRange(_dbContext.Info);
+        await _dbContext.SaveChangesAsync(TestContext.Current.CancellationToken);
+
         // Act
         var response = await _client.GetAsync("/api/info", TestContext.Current.CancellationToken);
 
