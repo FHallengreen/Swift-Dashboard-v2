@@ -5,7 +5,14 @@
 
 version: 2
 updates:
-  - package-ecosystem: "" # See documentation for possible values
-    directory: "/" # Location of package manifests
+  # Frontend (Node.js / npm)
+  - package-ecosystem: "npm"
+    directory: "/frontend"   # or "/" if package.json is at the repo root
+    schedule:
+      interval: "weekly"
+
+  # Backend (.NET / NuGet)
+  - package-ecosystem: "nuget"
+    directory: "/backend"
     schedule:
       interval: "weekly"
