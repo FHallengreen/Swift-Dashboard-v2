@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/sdk:9.0 AS test
+FROM mcr.microsoft.com/dotnet/sdk:10.0 AS test
 WORKDIR /app
 
 COPY SwiftDashboard.csproj .
@@ -13,4 +13,4 @@ RUN dotnet tool install --global Microsoft.Playwright.CLI
 ENV PATH="$PATH:/root/.dotnet/tools"
 RUN playwright install --with-deps
 
-ENTRYPOINT ["dotnet", "test", "./Tests/SwiftDashboard.Tests.csproj", "-c", "Release", "--no-build"]
+ENTRYPOINT ["dotnet", "test", "./Tests/SwiftDashboard.Tests.csproj", "-c", "Release", "--no-build", "--logger", "console;verbosity=detailed"]
