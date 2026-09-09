@@ -1,5 +1,5 @@
 # Use the multi-arch SDK image for the build stage
-FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 WORKDIR /app
 
 # Copy the .csproj file first and restore dependencies
@@ -13,7 +13,7 @@ COPY . .
 RUN dotnet publish SwiftDashboard.csproj -c Release -o out --no-self-contained
 
 # Use the multi-arch ASP.NET runtime image for the final stage
-FROM mcr.microsoft.com/dotnet/aspnet:9.0
+FROM mcr.microsoft.com/dotnet/aspnet:10.0
 WORKDIR /app
 COPY --from=build /app/out .
 
