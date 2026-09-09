@@ -32,6 +32,29 @@ jobs:
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
 
     steps:
+      - name: Free disk space
+        run: |
+          echo "=== Disk before ==="
+          df -h /
+          # Runner diagnostic logs grow unbounded - keep last 10
+          find ~/github-runner/_diag -type f -name '*.log' -printf '%T@ %p\n' 2>/dev/null \
+            | sort -rn | tail -n +11 | cut -d' ' -f2- | xargs -r rm -f
+          # Dangling images from previous builds, stopped containers, unused nets
+          docker container prune -f
+          docker image prune -f
+          # Build cache older than 7 days, capped at 2GB
+          docker builder prune -f --filter 'until=168h' --keep-storage 2GB
+          # Only if still tight (<5GB free): drop unused base images too.
+          # Costs a re-pull next step, so avoid unless needed.
+          AVAIL_KB=$(df --output=avail / | tail -1)
+          if [ "$AVAIL_KB" -lt 5242880 ]; then
+            echo "Under 5GB free - pruning all unused images"
+            docker image prune -af
+            docker builder prune -af
+          fi
+          echo "=== Disk after ==="
+          df -h /
+
       - name: Clean old workspace
         run: |
           cd ~/Swift-Dashboard-v2 || exit 0
@@ -70,3 +93,6 @@ jobs:
           docker compose -f docker-compose.yml build backend frontend
           echo "Restarting all services including cloudflared..."
           docker compose -f docker-compose.yml up -d --force-recreate nginx backend frontend
+          echo "Pruning images orphaned by this build..."
+          docker image prune -f
+          df -h /

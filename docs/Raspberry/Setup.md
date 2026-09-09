@@ -45,4 +45,24 @@
 
 - Pushed Docker-Compose file to the repository to make deployment easy.
 - Created Cloudflared config file on the Raspberry Pi to make sure it uses the right tunnel and settings. and same for Pangolin config file.
+- Installed the weekly disk cleanup job. The Pi filled up because Docker keeps
+  every dangling image and build cache layer from each deploy, and the GitHub
+  runner never rotates `_diag` logs.
+
+  ```bash
+  # From a checkout of the repo on the Pi
+  sudo install -m 0755 scripts/pi-disk-cleanup.sh /usr/local/sbin/pi-disk-cleanup.sh
+  sudo install -m 0644 scripts/pi-disk-cleanup.cron /etc/cron.d/pi-disk-cleanup
+
+  # Verify it runs and check what it reclaims
+  sudo RUNNER_HOME=/home/pi /usr/local/sbin/pi-disk-cleanup.sh
+
+  # Confirm cron picked the file up
+  sudo systemctl status cron --no-pager
+  journalctl -t pi-disk-cleanup --no-pager | tail
+  ```
+
+  The script never prunes volumes (`db-data` holds MySQL) and never removes an
+  image that a running container uses. It only escalates to a full image prune
+  when less than 5 GB is free.
 XXX

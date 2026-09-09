@@ -1,9 +1,16 @@
+x-logging: &default-logging
+  driver: json-file
+  options:
+    max-size: "10m"
+    max-file: "3"
+
 services:
   backend:
     build:
       context: ./backend
       dockerfile: Dockerfile
     container_name: swift_display_backend
+    logging: *default-logging
     env_file:
       - /home/pi/swift-secrets/dashboard.env
     expose:
@@ -32,6 +39,7 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
     container_name: swift_display_frontend
+    logging: *default-logging
     env_file:
       - /home/pi/swift-secrets/dashboard.env
     expose:
@@ -44,6 +52,7 @@ services:
   nginx:
     image: nginx:alpine
     container_name: swift_display_nginx
+    logging: *default-logging
     ports:
     - "80:80"
     expose:
@@ -59,6 +68,7 @@ services:
   cloudflared:
     image: cloudflare/cloudflared:latest
     container_name: cloudflared
+    logging: *default-logging
     restart: unless-stopped
     command: tunnel --config /etc/cloudflared/config.yml run
     volumes:
@@ -68,6 +78,7 @@ services:
   db:
     image: mysql:8.0
     container_name: swift_display_db
+    logging: *default-logging
     env_file:
       - /home/pi/swift-secrets/dashboard.env
     volumes:
